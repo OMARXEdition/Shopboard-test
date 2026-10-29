@@ -4,20 +4,74 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ShopBoard - Modern Marketplace</title>
+    <meta
+      name="description"
+      content="ShopBoard is a modern marketplace for curated electronics, workspace gear, and lifestyle essentials."
+    />
+    <meta name="theme-color" content="#f6f3ee" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap"
+    />
+    <noscript>
+      <style>
+        html .site-nav {
+          display: block;
+        }
+
+        html .nav-toggle {
+          display: none;
+        }
+      </style>
+    </noscript>
+    <title>ShopBoard — Modern Marketplace</title>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
     <!-- Header with Navigation -->
     <header class="site-header">
       <div class="header-container">
-        <a href="#hero" class="brand-logo" aria-label="ShopBoard Home">
-          <span class="logo-icon">🛍️</span>
+        <a href="#hero" class="brand-logo" aria-label="ShopBoard home">
+          <span class="logo-icon" aria-hidden="true">🛍️</span>
           <span class="logo-text">ShopBoard</span>
         </a>
 
-        <nav class="site-nav" aria-label="Primary Navigation">
+        <div class="header-actions">
+          <button type="button" class="cart-button" id="cart-button" aria-label="Cart, 0 items">
+            <svg
+              class="cart-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M5.5 8h13l-1.1 12.5H6.6L5.5 8Z" stroke-linejoin="round" />
+              <path d="M9 8V6.5a3 3 0 0 1 6 0V8" stroke-linecap="round" />
+            </svg>
+            <span class="cart-count" id="cart-count" aria-hidden="true">0</span>
+          </button>
+
+          <button
+            type="button"
+            class="nav-toggle"
+            id="nav-toggle"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+            aria-label="Open navigation menu"
+          >
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <nav id="primary-nav" class="site-nav" aria-label="Primary navigation">
           <ul class="nav-list">
-            <li><a href="#hero" class="nav-link">Home</a></li>
+            <li><a href="#hero" class="nav-link is-active" aria-current="location">Home</a></li>
             <li><a href="#products" class="nav-link">Products</a></li>
             <li><a href="#register" class="nav-link">Register</a></li>
           </ul>
@@ -26,33 +80,73 @@
     </header>
 
     <!-- Main Content Area with Three Sections -->
-    <main>
+    <main id="main-content">
       <!-- 1. Hero Section -->
       <section id="hero" class="hero-section" aria-labelledby="hero-title">
         <div class="hero-container">
-          <span class="hero-badge">✨ Next-Gen Shopping Experience</span>
-          <h1 id="hero-title">Elevate Your Everyday Essentials with ShopBoard</h1>
-          <p class="hero-description">
+          <span class="hero-badge" data-reveal>✨ Next-Gen Shopping Experience</span>
+          <h1 id="hero-title" class="hero-title" data-reveal>
+            Elevate Your Everyday Essentials with <span class="text-gradient">ShopBoard</span>
+          </h1>
+          <p class="hero-description" data-reveal>
             Discover curated collections of premium electronics, workspace accessories, and lifestyle essentials with fast shipping and guaranteed quality.
           </p>
-          <div class="hero-cta-group">
+          <div class="hero-cta-group" data-reveal>
             <a href="#products" class="btn btn-primary">Browse Products</a>
             <a href="#register" class="btn btn-secondary">Create Account</a>
           </div>
+          <ul class="hero-stats" data-reveal>
+            <li><strong>50k+</strong><span>happy shoppers</span></li>
+            <li><strong>4.9/5</strong><span>average rating</span></li>
+            <li><strong>Free</strong><span>shipping over $75</span></li>
+          </ul>
         </div>
       </section>
+
+      <!-- Decorative scrolling ticker -->
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <div class="ticker-group">
+            <span>Free shipping over $75</span>
+            <span>New drops every Friday</span>
+            <span>30-day easy returns</span>
+            <span>Member-only discounts</span>
+          </div>
+          <div class="ticker-group">
+            <span>Free shipping over $75</span>
+            <span>New drops every Friday</span>
+            <span>30-day easy returns</span>
+            <span>Member-only discounts</span>
+          </div>
+        </div>
+      </div>
 
       <!-- 2. Products Section (Articles as Cards) -->
       <section id="products" class="products-section" aria-labelledby="products-title">
         <div class="section-container">
-          <div class="section-header">
+          <div class="section-header" data-reveal>
+            <span class="eyebrow">Fresh picks</span>
             <h2 id="products-title">Featured Products</h2>
             <p>Explore our trending gear, crafted for creators and professionals.</p>
           </div>
 
+          <div class="filter-bar" role="group" aria-label="Filter products by category" data-reveal>
+            <button type="button" class="filter-chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="filter-chip" data-filter="audio" aria-pressed="false">Audio</button>
+            <button type="button" class="filter-chip" data-filter="peripherals" aria-pressed="false">Peripherals</button>
+            <button type="button" class="filter-chip" data-filter="wearables" aria-pressed="false">Wearables</button>
+            <button type="button" class="filter-chip" data-filter="accessories" aria-pressed="false">Accessories</button>
+          </div>
+          <p id="filter-status" class="visually-hidden" role="status"></p>
+
           <div class="products-grid">
             <!-- Product Card 1 -->
-            <article class="product-card" aria-label="Acoustic Pro Wireless Headphones">
+            <article
+              class="product-card"
+              data-category="audio"
+              data-reveal
+              aria-label="Acoustic Pro Wireless Headphones"
+            >
               <div class="product-image-wrapper">
                 <img
                   src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80"
@@ -79,7 +173,12 @@
             </article>
 
             <!-- Product Card 2 -->
-            <article class="product-card" aria-label="Mechanical RGB Gaming Keyboard">
+            <article
+              class="product-card"
+              data-category="peripherals"
+              data-reveal
+              aria-label="Mechanical RGB Gaming Keyboard"
+            >
               <div class="product-image-wrapper">
                 <img
                   src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop&q=80"
@@ -105,7 +204,12 @@
             </article>
 
             <!-- Product Card 3 -->
-            <article class="product-card" aria-label="Ultra-Slim Smartwatch">
+            <article
+              class="product-card"
+              data-category="wearables"
+              data-reveal
+              aria-label="Ultra-Slim Smartwatch"
+            >
               <div class="product-image-wrapper">
                 <img
                   src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80"
@@ -131,7 +235,12 @@
             </article>
 
             <!-- Product Card 4 -->
-            <article class="product-card" aria-label="3-in-1 Fast Wireless Charging Station">
+            <article
+              class="product-card"
+              data-category="accessories"
+              data-reveal
+              aria-label="3-in-1 Fast Wireless Charging Station"
+            >
               <div class="product-image-wrapper">
                 <img
                   src="https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=600&auto=format&fit=crop&q=80"
@@ -160,8 +269,9 @@
 
       <!-- 3. Register Form Section with Native Validation -->
       <section id="register" class="register-section" aria-labelledby="register-title">
-        <div class="section-container form-container">
+        <div class="section-container form-container" data-reveal>
           <div class="section-header">
+            <span class="eyebrow">Join the club</span>
             <h2 id="register-title">Create Your Account</h2>
             <p>Join ShopBoard to unlock member-only discounts, track orders, and checkout faster.</p>
           </div>
@@ -181,8 +291,9 @@
                 minlength="3"
                 maxlength="50"
                 autocomplete="name"
+                aria-describedby="fullName-hint"
               />
-              <small class="field-hint">Must be 3–50 characters</small>
+              <small id="fullName-hint" class="field-hint">Must be 3–50 characters</small>
             </div>
 
             <!-- Email Address Field -->
@@ -197,8 +308,9 @@
                 placeholder="alex.morgan@example.com"
                 required
                 autocomplete="email"
+                aria-describedby="email-hint"
               />
-              <small class="field-hint">We'll never share your email with third parties</small>
+              <small id="email-hint" class="field-hint">We'll never share your email with third parties</small>
             </div>
 
             <!-- Password Field -->
@@ -206,16 +318,35 @@
               <label for="password">
                 Password <span class="required" aria-hidden="true">*</span>
               </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="At least 8 characters"
-                required
-                minlength="8"
-                autocomplete="new-password"
-              />
-              <small class="field-hint">Minimum 8 characters with at least one letter and number</small>
+              <div class="password-wrap">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="At least 8 characters"
+                  required
+                  minlength="8"
+                  pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,}"
+                  title="At least 8 characters, including one letter and one number"
+                  autocomplete="new-password"
+                  aria-describedby="password-strength"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  id="toggle-password"
+                  aria-label="Show password"
+                  aria-pressed="false"
+                >
+                  Show
+                </button>
+              </div>
+              <div class="strength" id="password-strength" aria-live="polite">
+                <div class="strength-track" aria-hidden="true">
+                  <span id="strength-bar"></span>
+                </div>
+                <span class="strength-label" id="strength-label">8+ characters, with a letter and a number</span>
+              </div>
             </div>
 
             <!-- Account Type Selection -->
@@ -233,33 +364,24 @@
 
             <!-- Native Checkbox Validation -->
             <div class="form-group form-checkbox">
-              <input
-                type="checkbox"
-                id="terms"
-                name="terms"
-                required
-              />
+              <input type="checkbox" id="terms" name="terms" required />
               <label for="terms">
-                I agree to the <a href="#terms-link">Terms of Service</a> and <a href="#privacy-link">Privacy Policy</a> <span class="required" aria-hidden="true">*</span>
+                I agree to the Terms of Service and Privacy Policy
+                <span class="required" aria-hidden="true">*</span>
               </label>
             </div>
 
             <!-- Newsletter Optional Checkbox -->
             <div class="form-group form-checkbox">
-              <input
-                type="checkbox"
-                id="newsletter"
-                name="newsletter"
-              />
-              <label for="newsletter">
-                Subscribe to weekly curated deals and tech updates
-              </label>
+              <input type="checkbox" id="newsletter" name="newsletter" />
+              <label for="newsletter">Subscribe to weekly curated deals and tech updates</label>
             </div>
 
+            <!-- Form feedback (filled in by main.js) -->
+            <p id="form-status" class="form-status" role="status" hidden></p>
+
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary btn-block">
-              Register Account
-            </button>
+            <button type="submit" class="btn btn-primary btn-block">Register Account</button>
           </form>
         </div>
       </section>
@@ -272,6 +394,9 @@
         <p class="footer-note">Built with semantic HTML &amp; native form validation.</p>
       </div>
     </footer>
+
+    <!-- Toast notifications -->
+    <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
 
     <script type="module" src="/src/main.js"></script>
   </body>
