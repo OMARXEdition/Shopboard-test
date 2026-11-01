@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ShopBoard is a modern marketplace for curated electronics, workspace gear, and lifestyle essentials."
+    />
+    <meta name="theme-color" content="#090909" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap"
+    />
+    <noscript>
+      <style>
+        html .site-nav {
+          display: block;
+        }
+
+        html .nav-toggle {
+          display: none;
+        }
+      </style>
+    </noscript>
+    <title>ShopBoard — Modern Marketplace</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <!-- Header with Navigation -->
+    <header class="site-header">
+      <div class="header-container">
+        <a href="#hero" class="brand-logo" aria-label="ShopBoard home">
+          <span class="logo-icon" aria-hidden="true">S.</span>
+          <span class="logo-text">ShopBoard</span>
+        </a>
+
+        <div class="header-actions">
+          <button type="button" class="cart-button" id="cart-button" aria-label="Cart, 0 items">
+            <svg
+              class="cart-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M5.5 8h13l-1.1 12.5H6.6L5.5 8Z" stroke-linejoin="round" />
+              <path d="M9 8V6.5a3 3 0 0 1 6 0V8" stroke-linecap="round" />
+            </svg>
+            <span class="cart-count" id="cart-count" aria-hidden="true">0</span>
+          </button>
+
+          <button
+            type="button"
+            class="nav-toggle"
+            id="nav-toggle"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+            aria-label="Open navigation menu"
+          >
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <nav id="primary-nav" class="site-nav" aria-label="Primary navigation">
+          <ul class="nav-list">
+            <li><a href="#hero" class="nav-link is-active" aria-current="location">Home</a></li>
+            <li><a href="#products" class="nav-link">Products</a></li>
+            <li><a href="#play" class="nav-link">Explore</a></li><li><a href="#register" class="nav-link">Register</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content Area with Three Sections -->
+    <main id="main-content">
+      <!-- 1. Hero Section -->
+      <section id="hero" class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-container">
+          <div class="hero-copy">
+            <span class="hero-badge">THE SHOPBOARD AUDIO EDIT / 001</span>
+            <h1 id="hero-title" class="hero-title">Less noise.<br><span>More music.</span></h1>
+            <p class="hero-description">Find your own frequency. Exceptional sound, considered design, and everyday essentials that make a difference.</p>
+            <div class="hero-cta-group">
+              <a href="#products" class="btn btn-primary">Explore the collection <span aria-hidden="true">↗</span></a>
+              <a href="#register" class="btn btn-secondary">Become a member</a>
+            </div>
+            <p class="hero-edition">CURATED GEAR. UNCOMPROMISING QUALITY.</p>
+          </div>
+          <div class="hero-stage">
+            <span class="stage-label">ACOUSTIC PRO / WIRELESS</span>
+            <img class="hero-product" src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=1100&q=85" alt="Black over-ear headphones photographed against a dark background" fetchpriority="high" width="1100" height="1100">
+            <div class="feature-callout feature-callout-left"><span class="feature-symbol" aria-hidden="true">≋</span><strong>LESS DISTRACTION</strong><span>Active noise cancelling.<br>Stay in your world.</span></div>
+            <div class="feature-callout feature-callout-right"><span class="feature-symbol" aria-hidden="true">ϟ</span><strong>GO ALL DAY</strong><span>45 hours of sound.<br>One full charge.</span></div>
+            <div class="stage-caption"><span>IMMERSIVE SOUND. ALL DAY COMFORT.</span><a href="#products" aria-label="Explore Acoustic Pro headphones">↗</a></div>
+          </div>
+          <ul class="hero-stats">
+            <li><strong>50k+</strong><span>happy shoppers</span></li>
+            <li><strong>4.9/5</strong><span>average rating</span></li>
+            <li><strong>Free shipping</strong><span>on orders over $75</span></li>
+            <li><strong>30-day returns</strong><span>find your perfect fit</span></li>
+          </ul>
+        </div>      </section>
+
+      <!-- Decorative scrolling ticker -->
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <div class="ticker-group">
+            <span>Free shipping over $75</span>
+            <span>New drops every Friday</span>
+            <span>30-day easy returns</span>
+            <span>Member-only discounts</span>
+          </div>
+          <div class="ticker-group">
+            <span>Free shipping over $75</span>
+            <span>New drops every Friday</span>
+            <span>30-day easy returns</span>
+            <span>Member-only discounts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Products Section (Articles as Cards) -->
+      <section id="products" class="products-section" aria-labelledby="products-title">
+        <div class="section-container">
+          <div class="section-header" data-reveal>
+            <span class="eyebrow">THE COLLECTION</span>
+            <h2 id="products-title">Objects of distinction.</h2>
+            <p>Explore our trending gear, crafted for creators and professionals.</p>
+          </div>
+
+          <div class="catalog-controls" role="group" aria-label="Find products">
+            <div class="catalog-control">
+              <label for="product-search">Search products</label>
+              <input id="product-search" type="search" placeholder="Search by name">
+            </div>
+            <div class="catalog-control">
+              <label for="product-category">Category</label>
+              <select id="product-category">
+                <option value="all">All categories</option>
+              </select>
+            </div>
+            <div class="catalog-control">
+              <label for="product-sort">Sort by</label>
+              <select id="product-sort">
+                <option value="default">Default</option>
+                <option value="price-asc">Price low to high</option>
+                <option value="price-desc">Price high to low</option>
+              </select>
+            </div>
+          </div>
+          <p id="filter-status" role="status"></p>
+          <p id="products-empty" hidden>No products match. Try another search or category.</p>
+
+          <!-- Product cards are created by src/ui.js from src/products.js. -->
+          <div class="products-grid"></div>
+        </div>
+      </section>
+
+      <section id="play" class="showroom-section" aria-labelledby="play-title">
+        <div class="section-container showroom-layout">
+          <div class="showroom-copy">
+            <span class="eyebrow">SHOPBOARD / IN YOUR HANDS</span>
+            <h2 id="play-title">Your next favorite.<br>One swipe away.</h2>
+            <p>A little window into your everyday upgrade. Explore the collection on our interactive phone, discover the details, and add your favorites to your bag.</p>
+            <div class="showroom-guide"><span>01</span><div><strong>Swipe to discover</strong><p>Drag across the screen, use the arrows, or select a product below.</p></div></div>
+            <div class="showroom-guide"><span>02</span><div><strong>Get a closer look</strong><p>Switch between the overview and product details.</p></div></div>
+            <div class="showroom-guide"><span>03</span><div><strong>Make it yours</strong><p>Add to your bag directly from the phone.</p></div></div>
+            <div id="showroom-picker" class="showroom-picker" role="group" aria-label="Choose a product"></div>
+          </div>
+          <div class="showroom-device-area">
+            <div class="shop-phone" aria-label="Interactive ShopBoard product explorer">
+              <div class="shop-phone-top"><span>9:41</span><span class="shop-phone-island" aria-hidden="true"></span><span aria-label="Full battery">▰</span></div>
+              <div class="shop-phone-brand"><span>ShopBoard</span><span>THE POCKET EDIT</span></div>
+              <div class="shop-phone-image" id="phone-swipe" tabindex="0" role="group" aria-label="Product photo. Swipe or use left and right arrow keys to browse products.">
+                <img id="phone-product-image" alt="" draggable="false">
+                <span id="phone-category"></span>
+              </div>
+              <div class="phone-product-content">
+                <div class="phone-product-tabs" role="group" aria-label="Product information">
+                  <button type="button" id="phone-overview" aria-pressed="true">Overview</button>
+                  <button type="button" id="phone-details" aria-pressed="false">Details</button>
+                </div>
+                <h3 id="phone-product-name"></h3>
+                <p id="phone-product-description"></p>
+                <div class="phone-buy-row"><strong id="phone-product-price"></strong><button type="button" id="phone-add">Add to bag +</button></div>
+              </div>
+              <div class="phone-browse"><button type="button" id="phone-prev" aria-label="Previous product">←</button><span id="phone-position"></span><button type="button" id="phone-next" aria-label="Next product">→</button></div>
+              <div class="shop-phone-home" aria-hidden="true"></div>
+            </div>
+            <p class="phone-caption">YOUR WORLD. UPGRADED.</p>
+            <p id="phone-announcement" class="visually-hidden" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>      <!-- 3. Register Form Section with Native Validation -->
+      <section id="register" class="register-section" aria-labelledby="register-title">
+        <div class="section-container form-container" data-reveal>
+          <div class="section-header">
+            <span class="eyebrow">Join the club</span>
+            <h2 id="register-title">Create Your Account</h2>
+            <p>Join ShopBoard to unlock member-only discounts, track orders, and checkout faster.</p>
+          </div>
+
+          <form id="register-form" class="register-form" method="POST" action="/register">
+            <!-- Full Name Field -->
+            <div class="form-group">
+              <label for="fullName">
+                Full Name <span class="required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Alex Morgan"
+                required
+                minlength="3"
+                maxlength="50"
+                autocomplete="name"
+                aria-describedby="fullName-hint"
+              />
+              <small id="fullName-hint" class="field-hint">Must be 3–50 characters</small>
+            </div>
+
+            <!-- Email Address Field -->
+            <div class="form-group">
+              <label for="email">
+                Email Address <span class="required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="alex.morgan@example.com"
+                required
+                autocomplete="email"
+                aria-describedby="email-hint"
+              />
+              <small id="email-hint" class="field-hint">We'll never share your email with third parties</small>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+              <label for="password">
+                Password <span class="required" aria-hidden="true">*</span>
+              </label>
+              <div class="password-wrap">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="At least 8 characters"
+                  required
+                  minlength="8"
+                  pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,}"
+                  title="At least 8 characters, including one letter and one number"
+                  autocomplete="new-password"
+                  aria-describedby="password-strength"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  id="toggle-password"
+                  aria-label="Show password"
+                  aria-pressed="false"
+                >
+                  Show
+                </button>
+              </div>
+              <div class="strength" id="password-strength" aria-live="polite">
+                <div class="strength-track" aria-hidden="true">
+                  <span id="strength-bar"></span>
+                </div>
+                <span class="strength-label" id="strength-label">8+ characters, with a letter and a number</span>
+              </div>
+            </div>
+
+            <!-- Account Type Selection -->
+            <div class="form-group">
+              <label for="accountType">
+                Account Type <span class="required" aria-hidden="true">*</span>
+              </label>
+              <select id="accountType" name="accountType" required>
+                <option value="" disabled selected>-- Select an account type --</option>
+                <option value="individual">Personal Shopper</option>
+                <option value="business">Business / Wholesale</option>
+                <option value="merchant">Creator / Partner</option>
+              </select>
+            </div>
+
+            <!-- Native Checkbox Validation -->
+            <div class="form-group form-checkbox">
+              <input type="checkbox" id="terms" name="terms" required />
+              <label for="terms">
+                I agree to the Terms of Service and Privacy Policy
+                <span class="required" aria-hidden="true">*</span>
+              </label>
+            </div>
+
+            <!-- Newsletter Optional Checkbox -->
+            <div class="form-group form-checkbox">
+              <input type="checkbox" id="newsletter" name="newsletter" />
+              <label for="newsletter">Subscribe to weekly curated deals and tech updates</label>
+            </div>
+
+            <!-- Form feedback (filled in by main.js) -->
+            <p id="form-status" class="form-status" role="status" hidden></p>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-block">Register Account</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <p>&copy; 2026 ShopBoard. All rights reserved.</p>
+        <p class="footer-note">Considered essentials. Extraordinary everyday.</p>
+      </div>
+    </footer>
+
+    <!-- Toast notifications -->
+    <dialog id="cart-dialog" class="cart-dialog" aria-labelledby="cart-title">
+      <div class="cart-heading">
+        <h2 id="cart-title">Your cart</h2>
+        <button type="button" id="cart-close" class="cart-action" autofocus>Close</button>
+      </div>
+      <p id="cart-empty">Your cart is empty. Add something you love.</p>
+      <ul id="cart-items" class="cart-items"></ul>
+      <div class="cart-footer">
+        <p id="cart-summary" role="status" aria-live="polite" aria-atomic="true"></p>
+        <button type="button" id="cart-clear" class="cart-action">Clear cart</button>
+      </div>
+    </dialog>
+    <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
