@@ -11,6 +11,8 @@ test('RTL showroom keyboard and swipe navigation agree with visible arrows', () 
     setAttribute() {},
     append() {},
     setPointerCapture() {},
+    focus() {},
+    scrollIntoView() {},
     addEventListener(type, handler) { this.listeners.set(type, handler) },
   })
   const previousDocument = Object.getOwnPropertyDescriptor(globalThis, 'document')
@@ -22,7 +24,7 @@ test('RTL showroom keyboard and swipe navigation agree with visible arrows', () 
     createElement: element,
   } })
   try {
-    initShowroomUI(products, () => {})
+    const ui = initShowroomUI(products, () => true)
     const swipe = nodes.get('#phone-swipe')
     const name = nodes.get('#phone-product-name')
     const key = value => swipe.listeners.get('keydown')({ key: value, preventDefault() {} })
@@ -43,6 +45,10 @@ test('RTL showroom keyboard and swipe navigation agree with visible arrows', () 
     assert.equal(name.textContent, products[1].name)
     drag(-100)
     assert.equal(name.textContent, products[0].name)
+    assert.equal(ui.viewProduct(products[2].id), true)
+    assert.equal(name.textContent, products[2].name)
+    assert.equal(ui.viewProduct('missing-id'), false)
+    assert.equal(name.textContent, products[2].name)
   } finally {
     if (previousDocument) Object.defineProperty(globalThis, 'document', previousDocument)
     else delete globalThis.document

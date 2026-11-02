@@ -3,7 +3,7 @@ import { formatPrice } from '../../shared/format-price.ts'
 import { categoryLabel } from '../catalog/catalog.logic.ts'
 import type { Product } from '../catalog/catalog.types.ts'
 
-export const initShowroomUI = (products: readonly Product[], addProductToCart: (id: string) => void) => {
+export const initShowroomUI = (products: readonly Product[], addProductToCart: (id: string) => boolean) => {
   // Interactive phone showroom shares the same product objects as the catalog.
   const showroomPicker = $('#showroom-picker')
   const showroomProducts = products
@@ -52,8 +52,9 @@ export const initShowroomUI = (products: readonly Product[], addProductToCart: (
     $('#phone-prev').addEventListener('click', () => changeShowroom(-1))
     $('#phone-next').addEventListener('click', () => changeShowroom(1))
     $('#phone-add').addEventListener('click', () => {
-      addProductToCart(showroomProducts[showroomIndex].id)
-      $('#phone-announcement').textContent = `أُضيفت ${showroomProducts[showroomIndex].name} إلى سلّتك.`
+      if (addProductToCart(showroomProducts[showroomIndex].id)) {
+        $('#phone-announcement').textContent = `أُضيفت ${showroomProducts[showroomIndex].name} إلى سلّتك.`
+      }
     })
     for (const [selector, details] of [['#phone-overview', false], ['#phone-details', true]] as const) {
       $(selector).addEventListener('click', () => {
@@ -84,5 +85,17 @@ export const initShowroomUI = (products: readonly Product[], addProductToCart: (
       }
     })
     renderShowroom({ announce: false })
+  }
+  return {
+    viewProduct: (id: string) => {
+      const index = showroomProducts.findIndex(product => product.id === id)
+      if (index < 0) return false
+      showroomIndex = index
+      showroomDetails = false
+      renderShowroom()
+      $('#play').scrollIntoView({ block: 'start', behavior: 'auto' })
+      $('#phone-swipe').focus({ preventScroll: true })
+      return true
+    },
   }
 }

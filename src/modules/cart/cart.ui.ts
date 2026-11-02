@@ -4,7 +4,7 @@ import { findProduct } from '../catalog/catalog.logic.ts'
 import type { Product } from '../catalog/catalog.types.ts'
 import type { CartState } from './cart.types.ts'
 
-export const initCartUI = (cart: CartState, products: readonly Product[]) => {
+export const initCartUI = (cart: CartState, products: readonly Product[], onReviewOrder: () => void) => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const cartButton = $('#cart-button')
   const cartCountElement = $('#cart-count')
@@ -21,6 +21,7 @@ export const initCartUI = (cart: CartState, products: readonly Product[]) => {
     }
     $('#cart-summary').textContent = `الإجمالي: ${cartTotal.toLocaleString('ar')} منتجات · ${formatPrice(cart.getTotal())}`
     $<HTMLButtonElement>('#cart-clear').disabled = cartTotal === 0
+    $<HTMLButtonElement>('#cart-review-order').disabled = cartTotal === 0
     const list = cartItems
     list.replaceChildren()
     $('#cart-empty').hidden = cartTotal !== 0
@@ -94,11 +95,13 @@ export const initCartUI = (cart: CartState, products: readonly Product[]) => {
   })
   renderCart()
   
-  if (cartButton) {
-    cartButton.addEventListener('click', () => {
-      $<HTMLDialogElement>('#cart-dialog').showModal()
-    })
-  }
+  const openCart = () => $<HTMLDialogElement>('#cart-dialog').showModal()
+  cartButton.addEventListener('click', openCart)
+  $('#cart-review-order').addEventListener('click', () => {
+    if (!cart.getCount()) return
+    $<HTMLDialogElement>('#cart-dialog').close()
+    onReviewOrder()
+  })
   
   $('#cart-close').addEventListener('click', () => $<HTMLDialogElement>('#cart-dialog').close())
   $<HTMLButtonElement>('#cart-clear').addEventListener('click', () => {
@@ -116,5 +119,5 @@ export const initCartUI = (cart: CartState, products: readonly Product[]) => {
     return true
   }
 
-  return { addProductToCart }
+  return { addProductToCart, renderCart, openCart }
 }
