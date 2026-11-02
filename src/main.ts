@@ -1,14 +1,14 @@
 import './style.css'
-import { products } from './products.js'
+import { products } from './products.ts'
 import {
   formatPrice,
   categoryLabel,
   selectProducts,
   findProduct,
   getPasswordStrength,
-} from './logic.js'
-import { createCartState } from './state.js'
-import { initUI } from './ui.js'
+} from './logic.ts'
+import { createCartState } from './state.ts'
+import { initUI } from './ui.ts'
 
 // Connect the catalog, pure operations, state, and user interface.
 const cart = createCartState(undefined, products)

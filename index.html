@@ -159,7 +159,7 @@
           <p id="filter-status" role="status"></p>
           <p id="products-empty" hidden>No products match. Try another search or category.</p>
 
-          <!-- Product cards are created by src/ui.js from src/products.js. -->
+          <!-- Product cards are created by src/ui.ts from src/products.ts. -->
           <div class="products-grid"></div>
         </div>
       </section>
@@ -309,7 +309,7 @@
               <label for="newsletter">Subscribe to weekly curated deals and tech updates</label>
             </div>
 
-            <!-- Form feedback (filled in by main.js) -->
+            <!-- Form feedback (filled in by ui.ts) -->
             <p id="form-status" class="form-status" role="status" hidden></p>
 
             <!-- Submit Button -->
@@ -342,6 +342,6 @@
     </dialog>
     <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
 
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

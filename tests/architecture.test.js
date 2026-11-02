@@ -1,8 +1,8 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { products } from '../src/products.js'
-import { filterProducts, selectProducts, findProduct, formatPrice, categoryLabel, getPasswordStrength } from '../src/logic.js'
-import { createCartState } from '../src/state.js'
+import { products } from '../src/products.ts'
+import { filterProducts, selectProducts, findProduct, formatPrice, categoryLabel, getPasswordStrength } from '../src/logic.ts'
+import { createCartState } from '../src/state.ts'
 
 test('search, category, and price sort compose without changing original order', () => {
   const catalog = [

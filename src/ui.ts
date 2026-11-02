@@ -1,3 +1,17 @@
+import type { Product } from './types.ts'
+import type { CartState } from './state.ts'
+import type * as Logic from './logic.ts'
+
+interface UIOptions {
+  products: Product[]
+  formatPrice: typeof Logic.formatPrice
+  categoryLabel: typeof Logic.categoryLabel
+  selectProducts: typeof Logic.selectProducts
+  findProduct: typeof Logic.findProduct
+  getPasswordStrength: typeof Logic.getPasswordStrength
+  cart: CartState
+}
+
 // All storefront DOM reads, rendering, browser events, and animations live here.
 export const initUI = ({
   products,
@@ -7,14 +21,18 @@ export const initUI = ({
   findProduct,
   getPasswordStrength,
   cart,
-}) => {
+}: UIOptions) => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   
-  const $ = (selector, scope = document) => scope.querySelector(selector)
-  const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector))
+  const $ = <T extends HTMLElement = HTMLElement>(selector: string, scope: ParentNode = document): T => {
+    const element = scope.querySelector<T>(selector)
+    if (!element) throw new Error(`Missing required storefront element: ${selector}`)
+    return element
+  }
+  const $$ = <T extends HTMLElement = HTMLElement>(selector: string, scope: ParentNode = document): T[] => Array.from(scope.querySelectorAll<T>(selector))
   
   // Render before attaching reveal, filter, and cart listeners.
-  const makeElement = (tag, className, text) => {
+  const makeElement = <K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text?: string) => {
     const element = document.createElement(tag)
     element.className = className
     if (text !== undefined) element.textContent = text
@@ -65,10 +83,10 @@ export const initUI = ({
   const header = $('.site-header')
   const navToggle = $('#nav-toggle')
   const siteNav = $('#primary-nav')
-  const navLinks = $$('.nav-link')
+  const navLinks = $$<HTMLAnchorElement>('.nav-link')
   const sections = navLinks
     .map((link) => document.getElementById(link.hash.slice(1)))
-    .filter(Boolean)
+    .filter((section): section is HTMLElement => section !== null)
   
   let headerIsScrolled = false
   
@@ -183,9 +201,9 @@ export const initUI = ({
      Product filters
      -------------------------------------------------------------------------- */
   
-  const searchInput = $('#product-search')
-  const categorySelect = $('#product-category')
-  const sortSelect = $('#product-sort')
+  const searchInput = $<HTMLInputElement>('#product-search')
+  const categorySelect = $<HTMLSelectElement>('#product-category')
+  const sortSelect = $<HTMLSelectElement>('#product-sort')
   const productCards = $$('.product-card')
   const cardsById = new Map(productCards.map((card) => [card.dataset.productId, card]))
   const filterStatus = $('#filter-status')
@@ -207,7 +225,7 @@ export const initUI = ({
     const shown = visibleIds.size
   
     productCards.forEach((card) => {
-      const matches = visibleIds.has(card.dataset.productId)
+      const matches = visibleIds.has(card.dataset.productId ?? '')
       card.hidden = !matches
   
       if (!matches) return
@@ -227,7 +245,7 @@ export const initUI = ({
     })
 
     // Move existing cards to preserve their cart listeners while updating order.
-    visibleProducts.forEach((product) => catalog.append(cardsById.get(product.id)))
+    visibleProducts.forEach((product) => catalog.append(cardsById.get(product.id)!))
     $('#products-empty').hidden = shown !== 0
   
     if (filterStatus) {
@@ -259,7 +277,7 @@ export const initUI = ({
       cartButton.setAttribute('aria-label', `Cart, ${cartTotal} ${plural}`)
     }
     $('#cart-summary').textContent = `${cartTotal} ${cartTotal === 1 ? 'item' : 'items'} · ${formatPrice(cart.getTotal())}`
-    $('#cart-clear').disabled = cartTotal === 0
+    $<HTMLButtonElement>('#cart-clear').disabled = cartTotal === 0
     const list = cartItems
     list.replaceChildren()
     $('#cart-empty').hidden = cartTotal !== 0
@@ -270,7 +288,7 @@ export const initUI = ({
       details.append(makeElement('h3', '', product.name),
         makeElement('p', '', `${formatPrice(product.price)} each · ${formatPrice(Math.round(product.price * 100) * quantity / 100)}`))
       const controls = makeElement('div', 'cart-item-controls')
-      const action = (text, label, actionName) => {
+      const action = (text: string, label: string, actionName: string) => {
         const button = makeElement('button', 'cart-action', text)
         button.type = 'button'
         button.setAttribute('aria-label', label)
@@ -296,7 +314,7 @@ export const initUI = ({
     cartButton.classList.add('is-bumping')
   }
   
-  const showToast = (message) => {
+  const showToast = (message: string) => {
     if (!toastRegion) return
   
     const toast = document.createElement('div')
@@ -317,16 +335,17 @@ export const initUI = ({
   // Bind once to the stable list; rendering only replaces its children.
   const cartActions = { decrease: cart.decreaseItem, increase: cart.addItem, remove: cart.removeItem }
   cartItems.addEventListener('click', (event) => {
-    const button = event.target.closest('button[data-cart-action]')
+    const button = (event.target instanceof Element ? event.target : null)?.closest<HTMLElement>('button[data-cart-action]')
     if (!button || !cartItems.contains(button)) return
-    const productId = button.closest('.cart-item').dataset.productId
+    const productId = button.closest<HTMLElement>('.cart-item')?.dataset.productId
     const actionName = button.dataset.cartAction
-    const action = cartActions[actionName]
+    if (!productId || !actionName || !(actionName in cartActions)) return
+    const action = cartActions[actionName as keyof typeof cartActions]
     if (!action) return
     action(productId)
     renderCart()
-    const nextRow = Array.from(cartItems.children).find((item) => item.dataset.productId === productId)
-    const nextButton = nextRow?.querySelector(`[data-cart-action="${actionName}"]`)
+    const nextRow = Array.from(cartItems.querySelectorAll<HTMLElement>('.cart-item')).find((item) => item.dataset.productId === productId)
+    const nextButton = nextRow?.querySelector<HTMLElement>(`[data-cart-action="${actionName}"]`)
     const focusTarget = nextButton ?? $('#cart-close')
     focusTarget.focus()
   })
@@ -334,18 +353,18 @@ export const initUI = ({
   
   if (cartButton) {
     cartButton.addEventListener('click', () => {
-      $('#cart-dialog').showModal()
+      $<HTMLDialogElement>('#cart-dialog').showModal()
     })
   }
   
-  $('#cart-close').addEventListener('click', () => $('#cart-dialog').close())
-  $('#cart-clear').addEventListener('click', () => {
+  $('#cart-close').addEventListener('click', () => $<HTMLDialogElement>('#cart-dialog').close())
+  $<HTMLButtonElement>('#cart-clear').addEventListener('click', () => {
     cart.clear()
     renderCart()
     $('#cart-close').focus()
   })
-  const resetTimers = new WeakMap()
-  const addProductToCart = (productId) => {
+  const resetTimers = new WeakMap<Element, number>()
+  const addProductToCart = (productId: string) => {
     const product = findProduct(products, productId)
     if (!product) return
     cart.addItem(productId)
@@ -366,15 +385,16 @@ export const initUI = ({
   
   // One listener also handles cards moved by search, filtering, and sorting.
   catalog.addEventListener('click', (event) => {
-    const button = event.target.closest('.product-card .btn-outline')
+    const button = (event.target instanceof Element ? event.target : null)?.closest<HTMLElement>('.product-card .btn-outline')
     if (!button || !catalog.contains(button)) return
-    addProductToCart(button.closest('.product-card').dataset.productId)
+    const productId = button.closest<HTMLElement>('.product-card')?.dataset.productId
+    if (productId) addProductToCart(productId)
   })
   /* --------------------------------------------------------------------------
      Password visibility + strength meter
      -------------------------------------------------------------------------- */
   
-  const passwordInput = $('#password')
+  const passwordInput = $<HTMLInputElement>('#password')
   const togglePassword = $('#toggle-password')
   const strengthBar = $('#strength-bar')
   const strengthLabel = $('#strength-label')
@@ -436,7 +456,7 @@ export const initUI = ({
      Registration form (native validation + inline feedback)
      -------------------------------------------------------------------------- */
   
-  const registerForm = $('#register-form')
+  const registerForm = $<HTMLFormElement>('#register-form')
   const formStatus = $('#form-status')
   
   if (registerForm) {
@@ -475,11 +495,11 @@ export const initUI = ({
   const showroomProducts = products
   let showroomIndex = 0
   let showroomDetails = false
-  const pickerButtons = []
+  const pickerButtons: HTMLButtonElement[] = []
   const renderShowroom = ({ announce = true } = {}) => {
     const product = showroomProducts[showroomIndex]
-    $('#phone-product-image').src = product.image
-    $('#phone-product-image').alt = product.alt
+    $<HTMLImageElement>('#phone-product-image').src = product.image
+    $<HTMLImageElement>('#phone-product-image').alt = product.alt
     $('#phone-category').textContent = categoryLabel(product.category)
     $('#phone-product-name').textContent = product.name
     $('#phone-product-description').textContent = showroomDetails ? product.features.join(' · ') : product.description
@@ -491,7 +511,7 @@ export const initUI = ({
     pickerButtons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === showroomIndex)))
     if (announce) $('#phone-announcement').textContent = `${product.name}, ${formatPrice(product.price)}. Product ${showroomIndex + 1} of ${showroomProducts.length}.`
   }
-  const changeShowroom = (step) => {
+  const changeShowroom = (step: number) => {
     showroomIndex = (showroomIndex + step + showroomProducts.length) % showroomProducts.length
     renderShowroom()
   }
@@ -521,7 +541,7 @@ export const initUI = ({
       addProductToCart(showroomProducts[showroomIndex].id)
       $('#phone-announcement').textContent = `${showroomProducts[showroomIndex].name} added to your bag.`
     })
-    for (const [selector, details] of [['#phone-overview', false], ['#phone-details', true]]) {
+    for (const [selector, details] of [['#phone-overview', false], ['#phone-details', true]] as const) {
       $(selector).addEventListener('click', () => {
         showroomDetails = details
         renderShowroom({ announce: false })
@@ -529,7 +549,7 @@ export const initUI = ({
       })
     }
     const swipeArea = $('#phone-swipe')
-    let dragStart = null
+    let dragStart: { x: number; y: number; id: number } | null = null
     swipeArea.addEventListener('pointerdown', (event) => {
       if (!event.isPrimary || event.button !== 0) return
       dragStart = { x: event.clientX, y: event.clientY, id: event.pointerId }

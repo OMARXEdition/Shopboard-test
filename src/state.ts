@@ -1,16 +1,25 @@
+import type { Product } from './types.ts'
+
+export interface CartStorage {
+  getItem(key: string): string | null | undefined
+  setItem?(key: string, value: string): void
+}
+
 // Persist IDs and quantities, deriving prices from the current catalog.
 const CART_KEY = 'shopboard:cart'
 
-export const createCartState = (storage, catalog = []) => {
+export const createCartState = (storage?: CartStorage, catalog: readonly Product[] = []) => {
   const knownProducts = new Map(catalog.map((product) => [product.id, product]))
-  const quantities = new Map()
+  const quantities = new Map<string, number>()
   try {
     // Lazy access keeps importing this module safe outside the browser.
     storage ??= globalThis.localStorage
-    const saved = JSON.parse(storage?.getItem(CART_KEY) ?? '[]')
+    const saved: unknown = JSON.parse(storage?.getItem(CART_KEY) ?? '[]')
     // Legacy counts cannot identify products; start those carts empty.
     if (Array.isArray(saved)) saved.forEach((item) => {
-      if (item && knownProducts.has(item.id) && Number.isSafeInteger(item.quantity) && item.quantity > 0) {
+      if (item && typeof item === 'object' && 'id' in item && typeof item.id === 'string'
+        && 'quantity' in item && typeof item.quantity === 'number'
+        && knownProducts.has(item.id) && Number.isSafeInteger(item.quantity) && item.quantity > 0) {
         quantities.set(item.id, item.quantity)
       }
     })
@@ -20,30 +29,30 @@ export const createCartState = (storage, catalog = []) => {
 
   const save = () => {
     try {
-      storage?.setItem(CART_KEY, JSON.stringify(Array.from(quantities, ([id, quantity]) => ({ id, quantity }))))
+      storage?.setItem?.(CART_KEY, JSON.stringify(Array.from(quantities, ([id, quantity]) => ({ id, quantity }))))
     } catch {
       // Cart interactions continue even when persistence is blocked.
     }
   }
 
-  const getItems = () => Array.from(quantities, ([id, quantity]) => ({ product: knownProducts.get(id), quantity }))
+  const getItems = () => Array.from(quantities, ([id, quantity]) => ({ product: knownProducts.get(id)!, quantity }))
   return {
     getItems,
     getCount: () => Array.from(quantities.values()).reduce((sum, quantity) => sum + quantity, 0),
     getTotal: () => getItems().reduce((cents, { product, quantity }) => cents + Math.round(product.price * 100) * quantity, 0) / 100,
-    addItem: (id) => {
+    addItem: (id: string) => {
       if (!knownProducts.has(id)) return
       quantities.set(id, (quantities.get(id) ?? 0) + 1)
       save()
     },
-    decreaseItem: (id) => {
+    decreaseItem: (id: string) => {
       const quantity = quantities.get(id)
       if (!quantity) return
       if (quantity === 1) quantities.delete(id)
       else quantities.set(id, quantity - 1)
       save()
     },
-    removeItem: (id) => {
+    removeItem: (id: string) => {
       quantities.delete(id)
       save()
     },
@@ -53,3 +62,5 @@ export const createCartState = (storage, catalog = []) => {
     },
   }
 }
+
+export type CartState = ReturnType<typeof createCartState>

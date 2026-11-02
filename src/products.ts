@@ -1,5 +1,7 @@
-// Shared catalog: the storefront and showroom render these products with JavaScript.
-export const products = [
+import type { Product } from './types.ts'
+
+// Shared catalog: the storefront and showroom render these products from the shared catalog.
+export const products: Product[] = [
   {
     id: 'acoustic-pro',
     name: 'Acoustic Pro Headphones',
