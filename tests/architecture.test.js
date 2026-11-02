@@ -1,8 +1,10 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { products } from '../src/products.ts'
-import { filterProducts, selectProducts, findProduct, formatPrice, categoryLabel, getPasswordStrength } from '../src/logic.ts'
-import { createCartState } from '../src/state.ts'
+import { products } from '../src/modules/catalog/catalog.data.ts'
+import { filterProducts, selectProducts, findProduct, categoryLabel } from '../src/modules/catalog/catalog.logic.ts'
+import { formatPrice } from '../src/shared/format-price.ts'
+import { getPasswordStrength } from '../src/modules/auth/auth.logic.ts'
+import { createCartState } from '../src/modules/cart/cart.state.ts'
 
 test('search, category, and price sort compose without changing original order', () => {
   const catalog = [
@@ -38,8 +40,8 @@ test('category filtering returns products without mutating the catalog', () => {
 test('product lookup handles known and missing IDs', () => {
   assert.equal(findProduct(products, 'magflow-station').price, 69.99)
   assert.equal(findProduct(products, 'missing'), undefined)
-  assert.equal(formatPrice(129.5), '$129.50')
-  assert.equal(categoryLabel('audio'), 'Audio Gear')
+  assert.equal(formatPrice(129.5), new Intl.NumberFormat('ar', { style: 'currency', currency: 'USD' }).format(129.5))
+  assert.equal(categoryLabel('indoor'), 'نباتات داخلية')
 })
 
 test('password scoring keeps the existing levels', () => {

@@ -1,14 +1,10 @@
-import type { Product } from './types.ts'
-
-export interface CartStorage {
-  getItem(key: string): string | null | undefined
-  setItem?(key: string, value: string): void
-}
+import type { Product } from '../catalog/catalog.types.ts'
+import type { CartState, CartStorage } from './cart.types.ts'
 
 // Persist IDs and quantities, deriving prices from the current catalog.
 const CART_KEY = 'shopboard:cart'
 
-export const createCartState = (storage?: CartStorage, catalog: readonly Product[] = []) => {
+export const createCartState = (storage?: CartStorage, catalog: readonly Product[] = []): CartState => {
   const knownProducts = new Map(catalog.map((product) => [product.id, product]))
   const quantities = new Map<string, number>()
   try {
@@ -35,7 +31,10 @@ export const createCartState = (storage?: CartStorage, catalog: readonly Product
     }
   }
 
-  const getItems = () => Array.from(quantities, ([id, quantity]) => ({ product: knownProducts.get(id)!, quantity }))
+  const getItems = () => Array.from(quantities).flatMap(([id, quantity]) => {
+    const product = knownProducts.get(id)
+    return product ? [{ product, quantity }] : []
+  })
   return {
     getItems,
     getCount: () => Array.from(quantities.values()).reduce((sum, quantity) => sum + quantity, 0),
@@ -62,5 +61,3 @@ export const createCartState = (storage?: CartStorage, catalog: readonly Product
     },
   }
 }
-
-export type CartState = ReturnType<typeof createCartState>

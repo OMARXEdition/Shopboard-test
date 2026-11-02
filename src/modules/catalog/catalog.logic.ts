@@ -1,14 +1,14 @@
-import type { Product, ProductSelection } from './types.ts'
+import type { Product, ProductSelection } from './catalog.types.ts'
 
-// Pure functions: inputs in, results out. No browser or storage access.
-export const formatPrice = (price: number) => new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-}).format(price)
+const categoryLabels: Record<string, string> = {
+  indoor: 'نباتات داخلية',
+  outdoor: 'نباتات خارجية',
+  flowering: 'نباتات مزهرة',
+  succulents: 'صبارات وعصاريات',
+  accessories: 'أصص ومستلزمات',
+}
 
-export const categoryLabel = (category: string) => category === 'audio'
-  ? 'Audio Gear'
-  : category.charAt(0).toUpperCase() + category.slice(1)
+export const categoryLabel = (category: string) => categoryLabels[category] ?? category
 
 export const filterProducts = <T extends Product>(products: readonly T[], category = 'all') =>
   products.filter((product) => category === 'all' || product.category === category)
@@ -26,10 +26,3 @@ export const selectProducts = <T extends Product>(products: readonly T[], { sear
 export const findProduct = (products: readonly Product[], id: string) =>
   products.find((product) => product.id === id)
 
-export const getPasswordStrength = (value: string) => {
-  if (value.length < 8) return 0
-  if (value.length >= 12 && /[^A-Za-z0-9]/.test(value)) return 4
-  if (value.length >= 12) return 3
-  if (/[A-Za-z]/.test(value) && /\d/.test(value)) return 2
-  return 1
-}
