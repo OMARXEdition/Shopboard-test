@@ -1,7 +1,12 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { products } from '../src/modules/catalog/catalog.data.ts'
-import { filterProducts, selectProducts, findProduct, categoryLabel } from '../src/modules/catalog/catalog.logic.ts'
+import {
+  filterProducts,
+  selectProducts,
+  findProduct,
+  categoryLabel,
+} from '../src/modules/catalog/catalog.logic.ts'
 import { formatPrice } from '../src/shared/format-price.ts'
 import { getPasswordStrength } from '../src/modules/auth/auth.logic.ts'
 import { createCartState } from '../src/modules/cart/cart.state.ts'
@@ -14,24 +19,35 @@ test('search, category, and price sort compose without changing original order',
     { id: 'd', name: 'Walking Boot', category: 'shoes', price: 70 },
   ]
   const before = structuredClone(catalog)
-  const ids = (options) => selectProducts(catalog, options).map((product) => product.id)
+  const ids = (options) =>
+    selectProducts(catalog, options).map((product) => product.id)
   assert.deepEqual(ids({ search: 'shoe' }), ['a', 'b', 'c'])
   assert.deepEqual(ids({ search: ' SHOE ' }), ['a', 'b', 'c'])
-  assert.deepEqual(ids({ search: 'shoe', category: 'shoes', sort: 'price-asc' }), ['c', 'a'])
-  assert.deepEqual(ids({ search: 'shoe', category: 'shoes', sort: 'price-desc' }), ['a', 'c'])
+  assert.deepEqual(
+    ids({ search: 'shoe', category: 'shoes', sort: 'price-asc' }),
+    ['c', 'a'],
+  )
+  assert.deepEqual(
+    ids({ search: 'shoe', category: 'shoes', sort: 'price-desc' }),
+    ['a', 'c'],
+  )
   assert.deepEqual(ids({ sort: 'price-asc' }), ['b', 'c', 'd', 'a'])
   assert.deepEqual(ids({ sort: 'price-desc' }), ['a', 'd', 'c', 'b'])
   assert.deepEqual(ids({ sort: 'default' }), ['a', 'b', 'c', 'd'])
-  assert.deepEqual(ids({ search: 'shoe', category: 'shoes', sort: 'default' }), ['a', 'c'])
+  assert.deepEqual(
+    ids({ search: 'shoe', category: 'shoes', sort: 'default' }),
+    ['a', 'c'],
+  )
   assert.deepEqual(ids({ search: 'missing' }), [])
   assert.deepEqual(catalog, before)
 })
 
 test('category filtering returns products without mutating the catalog', () => {
   const before = structuredClone(products)
-  assert.deepEqual(filterProducts(products, 'accessories').map(p => p.id), [
-    'magflow-station', 'volt-power', 'link-usb-hub',
-  ])
+  assert.deepEqual(
+    filterProducts(products, 'accessories').map((p) => p.id),
+    ['magflow-station', 'volt-power', 'link-usb-hub'],
+  )
   assert.equal(filterProducts(products).length, 12)
   assert.deepEqual(filterProducts(products, 'missing'), [])
   assert.deepEqual(products, before)
@@ -40,21 +56,31 @@ test('category filtering returns products without mutating the catalog', () => {
 test('product lookup handles known and missing IDs', () => {
   assert.equal(findProduct(products, 'magflow-station').price, 69.99)
   assert.equal(findProduct(products, 'missing'), undefined)
-  assert.equal(formatPrice(129.5), new Intl.NumberFormat('ar', { style: 'currency', currency: 'USD' }).format(129.5))
+  assert.equal(
+    formatPrice(129.5),
+    new Intl.NumberFormat('ar', { style: 'currency', currency: 'USD' }).format(
+      129.5,
+    ),
+  )
   assert.equal(categoryLabel('indoor'), 'نباتات داخلية')
 })
 
 test('password scoring keeps the existing levels', () => {
   for (const [password, expected] of [
-    ['', 0], ['short', 0], ['abcdefgh', 1],
-    ['abcdefg1', 2], ['abcdefghijkl', 3], ['abcdefghijk!', 4],
-  ]) assert.equal(getPasswordStrength(password), expected)
+    ['', 0],
+    ['short', 0],
+    ['abcdefgh', 1],
+    ['abcdefg1', 2],
+    ['abcdefghijkl', 3],
+    ['abcdefghijk!', 4],
+  ])
+    assert.equal(getPasswordStrength(password), expected)
 })
 
 test('cart merges quantities, calculates totals, removes lines, clears, and reloads', () => {
   const saved = new Map()
   const storage = {
-    getItem: key => saved.get(key),
+    getItem: (key) => saved.get(key),
     setItem: (key, value) => saved.set(key, value),
   }
   const cart = createCartState(storage, products)
@@ -96,8 +122,11 @@ test('every cart change is persisted and restores identical lines, count, and to
   const saved = new Map()
   let writes = 0
   const storage = {
-    getItem: key => saved.get(key),
-    setItem: (key, value) => { saved.set(key, value); writes += 1 },
+    getItem: (key) => saved.get(key),
+    setItem: (key, value) => {
+      saved.set(key, value)
+      writes += 1
+    },
   }
   const cart = createCartState(storage, products)
   const changes = [
@@ -121,15 +150,35 @@ test('every cart change is persisted and restores identical lines, count, and to
 })
 
 test('cart rejects invalid persisted values and survives storage failures', () => {
-  for (const value of ['3', '-2', 'NaN', '4oops', '1.5', 'Infinity', '{}', 'null',
-    '[{"id":"missing","quantity":2}]', '[{"id":"volt-power","quantity":-1}]',
-    '[{"id":"volt-power","quantity":1.5}]']) {
-    assert.equal(createCartState({ getItem: () => value }, products).getCount(), 0)
+  for (const value of [
+    '3',
+    '-2',
+    'NaN',
+    '4oops',
+    '1.5',
+    'Infinity',
+    '{}',
+    'null',
+    '[{"id":"missing","quantity":2}]',
+    '[{"id":"volt-power","quantity":-1}]',
+    '[{"id":"volt-power","quantity":1.5}]',
+  ]) {
+    assert.equal(
+      createCartState({ getItem: () => value }, products).getCount(),
+      0,
+    )
   }
-  const cart = createCartState({
-    getItem() { throw Error('blocked') },
-    setItem() { throw Error('quota') },
-  }, products)
+  const cart = createCartState(
+    {
+      getItem() {
+        throw Error('blocked')
+      },
+      setItem() {
+        throw Error('quota')
+      },
+    },
+    products,
+  )
   assert.equal(cart.getCount(), 0)
   cart.addItem('volt-power')
   cart.addItem('volt-power')

@@ -24,10 +24,20 @@ export const initOrdersUI = (orders: OrdersState, options: OrdersUIOptions) => {
 
   const itemList = (order: Order) => {
     const items = makeElement('ul', 'order-items')
-    order.items.forEach(item => {
+    order.items.forEach((item) => {
       const row = makeElement('li', 'order-item')
-      row.append(makeElement('span', '', `${item.name} × ${item.quantity.toLocaleString('ar')}`),
-        makeElement('span', '', formatPrice(item.unitPriceCents * item.quantity / 100)))
+      row.append(
+        makeElement(
+          'span',
+          '',
+          `${item.name} × ${item.quantity.toLocaleString('ar')}`,
+        ),
+        makeElement(
+          'span',
+          '',
+          formatPrice((item.unitPriceCents * item.quantity) / 100),
+        ),
+      )
       items.append(row)
     })
     return items
@@ -39,25 +49,44 @@ export const initOrdersUI = (orders: OrdersState, options: OrdersUIOptions) => {
     try {
       const history = orders.getOrders()
       empty.hidden = history.length > 0
-      history.forEach(order => {
+      history.forEach((order) => {
         const card = makeElement('li', 'order-card')
         const top = makeElement('div', 'order-card-heading')
         const title = makeElement('h3', '', 'طلب ')
         const number = makeElement('bdi', 'order-number', order.id)
         title.append(number)
-        const date = makeElement('time', 'order-date', new Intl.DateTimeFormat('ar', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(order.createdAt)))
+        const date = makeElement(
+          'time',
+          'order-date',
+          new Intl.DateTimeFormat('ar', {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+          }).format(new Date(order.createdAt)),
+        )
         date.dateTime = order.createdAt
         top.append(title, date)
         const details = makeElement('details', 'order-details')
-        details.append(makeElement('summary', '', 'عرض تفاصيل الطلب'), itemList(order))
-        card.append(top, makeElement('span', 'order-badge', 'طلب تجريبي محفوظ'),
-          makeElement('p', 'order-total', `الإجمالي: ${formatPrice(order.totalCents / 100)}`), details)
+        details.append(
+          makeElement('summary', '', 'عرض تفاصيل الطلب'),
+          itemList(order),
+        )
+        card.append(
+          top,
+          makeElement('span', 'order-badge', 'طلب تجريبي محفوظ'),
+          makeElement(
+            'p',
+            'order-total',
+            `الإجمالي: ${formatPrice(order.totalCents / 100)}`,
+          ),
+          details,
+        )
         list.append(card)
       })
     } catch {
       empty.hidden = true
       status.hidden = false
-      status.textContent = 'تعذّر قراءة سجل الطلبات من هذا المتصفح. تأكّد من السماح بالتخزين ثم حاول مجددًا.'
+      status.textContent =
+        'تعذّر قراءة سجل الطلبات من هذا المتصفح. تأكّد من السماح بالتخزين ثم حاول مجددًا.'
     }
   }
 
@@ -87,7 +116,8 @@ export const initOrdersUI = (orders: OrdersState, options: OrdersUIOptions) => {
       dialog.close()
     } catch {
       reviewStatus.hidden = false
-      reviewStatus.textContent = 'لم يُحفظ الطلب. بقيت سلّتك كما هي. تأكّد من توفر مساحة التخزين ثم أعد المحاولة.'
+      reviewStatus.textContent =
+        'لم يُحفظ الطلب. بقيت سلّتك كما هي. تأكّد من توفر مساحة التخزين ثم أعد المحاولة.'
     } finally {
       saving = false
       confirm.disabled = pending === null
@@ -100,16 +130,22 @@ export const initOrdersUI = (orders: OrdersState, options: OrdersUIOptions) => {
       placed = false
       reviewStatus.hidden = true
       try {
-        pending = createOrderSnapshot(options.getCartItems(), `NB-${crypto.randomUUID()}`, new Date().toISOString())
+        pending = createOrderSnapshot(
+          options.getCartItems(),
+          `NB-${crypto.randomUUID()}`,
+          new Date().toISOString(),
+        )
         reviewList.replaceChildren(itemList(pending))
-        $('#order-review-total').textContent = `الإجمالي: ${formatPrice(pending.totalCents / 100)}`
+        $('#order-review-total').textContent =
+          `الإجمالي: ${formatPrice(pending.totalCents / 100)}`
         confirm.disabled = false
         dialog.showModal()
       } catch {
         pending = null
         confirm.disabled = true
         status.hidden = false
-        status.textContent = 'تعذّر تجهيز الطلب. أضف منتجًا إلى السلة وتحقّق من الكميات.'
+        status.textContent =
+          'تعذّر تجهيز الطلب. أضف منتجًا إلى السلة وتحقّق من الكميات.'
         options.onCancel()
       }
     },

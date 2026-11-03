@@ -1,17 +1,21 @@
 # AGENTS.md
 
 ## Project overview
+
 Nabta (نبتة), originally Shopboard, is an Arabic plant-store web app built with Vite and vanilla TypeScript.
 
 ## Design
+
 - Read `Design.md` before changing the storefront appearance or brand assets.
 - Use Arabic RTL layouts, Harmattan for body text and controls, and Aref Ruqaa for headings.
 - Use the approved original `src/assets/nabta-logo.png` in the header and footer on ivory; preserve its complete canvas, proportions, colors, and lettering. Alt text: `نبتة — Nabta`.
 
 ## Stack
+
 Vite (vanilla), TypeScript, HTML, CSS
 
 ## Commands
+
 - Install: `npm install`
 - Run dev server: `npm run dev`
 - Build: `npm run build`
@@ -20,6 +24,7 @@ Vite (vanilla), TypeScript, HTML, CSS
 - Tests: `npm test`
 
 ## Project structure
+
 - `index.html` - app entry page
 - `src/modules/cart/` - cart types, state, persistence, dialog, and cart feedback
 - `src/modules/catalog/` - product types, catalog data, pure filtering/sorting, cards, and catalog controls
@@ -36,6 +41,7 @@ Vite (vanilla), TypeScript, HTML, CSS
 - `public/` - static files served as-is (favicon, icons)
 
 ## Module conventions
+
 - Use ES module imports and exports with explicit `.ts` extensions for local modules.
 - Organize code by feature under `src/modules/`; create files only for real responsibilities.
 - Catalog owns `Product` and `ProductSelection` in `catalog.types.ts`; other features use `import type` for these contracts.
@@ -55,15 +61,16 @@ Vite (vanilla), TypeScript, HTML, CSS
 - Run typecheck, tests, and build after changing module interfaces or imports.
 
 ## Code style
+
 - Semantic HTML first.
 - Every input has a label.
 - Mobile-first, min-width media queries.
 - No `!important`.
 
 ## Rules for the agent
+
 - Explain every change.
 - Run `npm run build` to check nothing is broken before finishing a task.
 - Ask before adding new dependencies.
 - Never edit `package-lock.json` by hand or touch `node_modules/`.
 - Never commit secrets or `.env` files.
-

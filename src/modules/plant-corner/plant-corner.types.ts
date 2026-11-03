@@ -5,7 +5,10 @@ export type PotColor = 'ivory' | 'sage' | 'terracotta'
 export type WallColor = 'ivory' | 'sage' | 'sand'
 export type PlantSize = 'small' | 'medium' | 'large'
 
-export interface CornerPlant { product: Product; kind: PlantKind }
+export interface CornerPlant {
+  product: Product
+  kind: PlantKind
+}
 export interface CornerSettings {
   productId: string
   pot: PotColor
