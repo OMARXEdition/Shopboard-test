@@ -45,5 +45,5 @@ Vite (vanilla), HTML, CSS
 - Besure that you inserted the photos of the products correctlly and it appears to the user.
 - Ask for requists details before adding new feature.
 - Before applying new design follow the Design.md folder and besure that the new desgin will follow the file instructions.
-- summerize the prompt to muliple points and ask me if the summerized points is the thing i ,and ask my permission to apply it.
+- summerize the prompt to muliple points and ask me if the summerized points is the thing i want,and ask my permission to apply it.
 - organize the code and make the shared function in a single file so the entire program can call it and use it.
