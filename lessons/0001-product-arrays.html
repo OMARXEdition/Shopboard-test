@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Learn arrays with Shopboard</title><link rel="stylesheet" href="../assets/learning.css"></head><body>
+<a href="/">Shopboard</a> / <a href="../reference/product-arrays.html">Quick reference</a>
+<p>SHOPBOARD / JAVASCRIPT PRACTICE</p><h1>Find the products<br>under your budget.</h1>
+<p>Your goal: use filter to select products by price. Then compare its result with map, sort, find, and reduce using your real catalog.</p>
+<h2>Start with one condition</h2><pre><code>products.filter(product => product.price &lt; 150)</code></pre>
+<p>Read the arrow function as: “For each product, is its price less than 150?” A true result keeps that product. A false result leaves it out. The returned array contains the keyboard and charging station. Nothing is displayed until you render or log the result.</p>
+<div class="controls"><div><label for="method">Method to explore</label><select id="method"><option>filter</option><option>map</option><option>sort</option><option>find</option><option>reduce</option></select></div>
+<div><label for="budget">Budget: keep prices below this</label><input id="budget" type="number" value="150" min="0" step="1"></div>
+<div><label for="product-id">Find product by ID</label><select id="product-id"><option value="missing">Missing product (try this)</option></select></div></div>
+<h2>Code</h2><pre id="example"></pre><h2>Result</h2><pre id="result" aria-live="polite"></pre><p id="explanation"></p>
+<section class="panel"><h2>Predict before you click</h2><p>Which method returns all products priced under $150?</p><button type="button" data-answer="map">Use map</button><button type="button" data-answer="filter">Use filter</button><button type="button" data-answer="find">Use find</button><p id="feedback" role="status"></p></section>
+<h2>Your next small task</h2><p>In your browser console, run <code>const { products } = await import('/src/data.js')</code>. Write an expression that keeps products under $160, sorts them cheapest first, and returns only their names. Predict the three names before running it.</p>
+<details><summary>Check your answer</summary><pre><code>products
+  .filter(product => product.price &lt; 160)
+  .sort((a, b) => a.price - b.price)
+  .map(product => product.name)</code></pre><p>MagFlow Wireless Station, Apex Pro Mechanical Keyboard, Chronos Pulse Smartwatch. Sorting is safe here because filter already created a new array.</p></details>
+<p>Read <a id="source" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">MDN's method documentation</a>. Ask me any follow-up question, or send your expression and explain what you expect it to return.</p>
+<script type="module" src="../assets/product-array-lab.js"></script></body></html>

@@ -1,5 +1,6 @@
 import { $, makeElement } from '../../shared/dom.ts'
 import { formatPrice } from '../../shared/format-price.ts'
+import { showToast } from '../../shared/ui/toast.ts'
 import { findProduct } from '../catalog/catalog.logic.ts'
 import type { Product } from '../catalog/catalog.types.ts'
 import type { CartState } from './cart.types.ts'
@@ -8,7 +9,6 @@ export const initCartUI = (cart: CartState, products: readonly Product[], onRevi
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const cartButton = $('#cart-button')
   const cartCountElement = $('#cart-count')
-  const toastRegion = $('#toast-region')
   const cartItems = $('#cart-items')
   
   const renderCart = () => {
@@ -58,24 +58,6 @@ export const initCartUI = (cart: CartState, products: readonly Product[], onRevi
     cartButton.classList.add('is-bumping')
   }
   
-  const showToast = (message: string) => {
-    if (!toastRegion) return
-  
-    const toast = document.createElement('div')
-    toast.className = 'toast'
-    toast.textContent = message
-    toastRegion.append(toast)
-  
-    while (toastRegion.children.length > 3) {
-      toastRegion.firstElementChild?.remove()
-    }
-  
-    window.setTimeout(() => {
-      toast.classList.add('is-leaving')
-      window.setTimeout(() => toast.remove(), 250)
-    }, 3200)
-  }
-  
   // Bind once to the stable list; rendering only replaces its children.
   const cartActions = { decrease: cart.decreaseItem, increase: cart.addItem, remove: cart.removeItem }
   cartItems.addEventListener('click', (event) => {
@@ -115,7 +97,7 @@ export const initCartUI = (cart: CartState, products: readonly Product[], onRevi
     cart.addItem(productId)
     renderCart()
     bumpCart()
-    showToast(`أُضيفت «${product.name}» إلى سلّتك.`)
+    showToast(`أُضيفت «${product.name}» إلى سلّتك.`, 'success')
     return true
   }
 

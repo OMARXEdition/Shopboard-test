@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Shopboard array reference</title><link rel="stylesheet" href="../assets/learning.css"></head><body>
+<a href="../lessons/0001-product-arrays.html">Back to practice</a><h1>Five methods. Five jobs.</h1>
+<table><thead><tr><th>Method</th><th>Job</th><th>Returns</th></tr></thead><tbody>
+<tr><td>map</td><td>Transform every product</td><td>New array, same length for this dense catalog</td></tr>
+<tr><td>filter</td><td>Keep matching products</td><td>New array, possibly empty</td></tr>
+<tr><td>sort</td><td>Reorder products</td><td>The same array, changed in place</td></tr>
+<tr><td>find</td><td>Get first matching product</td><td>Object, or undefined</td></tr>
+<tr><td>reduce</td><td>Combine values</td><td>Accumulated result</td></tr></tbody></table>
+<h2>Shopboard examples</h2><pre><code>products.map(product => product.name)
+products.filter(product => product.price &lt; 150)
+[...products].sort((a, b) => a.price - b.price)
+products.find(product => product.id === 'magflow-station')
+products.reduce((total, product) => total + Math.round(product.price * 100), 0) / 100</code></pre>
+<p>The last expression totals one of every catalog product. It is not the customer's cart total. A real cart needs product IDs and quantities; the current app stores only a count.</p>
+<p>Use map when you need its returned array. Your existing forEach is appropriate for appending cards as a side effect. Use a numeric comparator with sort; copy the array first to preserve catalog order. These copies still share product objects, so do not change their properties accidentally.</p>
+<p>Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">MDN's Array reference</a> and the method documentation linked in the lesson.</p></body></html>

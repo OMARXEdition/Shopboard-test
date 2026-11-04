@@ -261,6 +261,9 @@ input::placeholder { color: #7a806e; opacity: 1; }
 .empty-state { padding: 30px 16px; text-align: center; color: var(--muted); }
 .toast-region { position: fixed; inset-inline-end: 18px; bottom: 18px; z-index: 30; display: grid; gap: 10px; width: min(360px, calc(100% - 36px)); pointer-events: none; }
 .toast { padding: 14px 20px; border: 1px solid #728d66; border-radius: 4px; background: var(--green); color: var(--ivory); box-shadow: 0 8px 24px #254b3624; transition: opacity .25s, transform .25s; }
+.toast--success { background: var(--green); }
+.toast--error { background: #783c32; border-color: #783c32; }
+.toast--info { background: var(--ivory); color: var(--green); }
 .toast.is-leaving { opacity: 0; transform: translateY(8px); }
 .is-bumping { animation: bump .3s ease; }
 @keyframes bump { 50% { transform: scale(1.08); } }
