@@ -5,21 +5,32 @@ import { findProduct } from '../catalog/catalog.logic.ts'
 import type { Product } from '../catalog/catalog.types.ts'
 import type { CartState } from './cart.types.ts'
 
-export const initCartUI = (cart: CartState, products: readonly Product[], onReviewOrder: () => void) => {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+export const initCartUI = (
+  cart: CartState,
+  products: readonly Product[],
+  onReviewOrder: () => void,
+) => {
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches
   const cartButton = $('#cart-button')
   const cartCountElement = $('#cart-count')
   const cartItems = $('#cart-items')
-  
+
   const renderCart = () => {
     const cartTotal = cart.getCount()
-    if (cartCountElement) cartCountElement.textContent = cartTotal.toLocaleString('ar')
-  
+    if (cartCountElement)
+      cartCountElement.textContent = cartTotal.toLocaleString('ar')
+
     if (cartButton) {
       const plural = 'منتجات'
-      cartButton.setAttribute('aria-label', `السلة، ${cartTotal.toLocaleString('ar')} ${plural}`)
+      cartButton.setAttribute(
+        'aria-label',
+        `السلة، ${cartTotal.toLocaleString('ar')} ${plural}`,
+      )
     }
-    $('#cart-summary').textContent = `الإجمالي: ${cartTotal.toLocaleString('ar')} منتجات · ${formatPrice(cart.getTotal())}`
+    $('#cart-summary').textContent =
+      `الإجمالي: ${cartTotal.toLocaleString('ar')} منتجات · ${formatPrice(cart.getTotal())}`
     $<HTMLButtonElement>('#cart-clear').disabled = cartTotal === 0
     $<HTMLButtonElement>('#cart-review-order').disabled = cartTotal === 0
     const list = cartItems
@@ -29,8 +40,14 @@ export const initCartUI = (cart: CartState, products: readonly Product[], onRevi
       const row = makeElement('li', 'cart-item')
       row.dataset.productId = product.id
       const details = makeElement('div', 'cart-item-details')
-      details.append(makeElement('h3', '', product.name),
-        makeElement('p', '', `${formatPrice(product.price)} للقطعة · ${formatPrice(Math.round(product.price * 100) * quantity / 100)}`))
+      details.append(
+        makeElement('h3', '', product.name),
+        makeElement(
+          'p',
+          '',
+          `${formatPrice(product.price)} للقطعة · ${formatPrice((Math.round(product.price * 100) * quantity) / 100)}`,
+        ),
+      )
       const controls = makeElement('div', 'cart-item-controls')
       const action = (text: string, label: string, actionName: string) => {
         const button = makeElement('button', 'cart-action', text)
@@ -41,7 +58,11 @@ export const initCartUI = (cart: CartState, products: readonly Product[], onRevi
       }
       controls.append(
         action('−', `تقليل كمية ${product.name}`, 'decrease'),
-        makeElement('span', 'cart-quantity', `الكمية: ${quantity.toLocaleString('ar')}`),
+        makeElement(
+          'span',
+          'cart-quantity',
+          `الكمية: ${quantity.toLocaleString('ar')}`,
+        ),
         action('+', `زيادة كمية ${product.name}`, 'increase'),
         action('إزالة', `إزالة ${product.name}`, 'remove'),
       )
@@ -49,34 +70,44 @@ export const initCartUI = (cart: CartState, products: readonly Product[], onRevi
       list.append(row)
     })
   }
-  
+
   const bumpCart = () => {
     if (!cartButton || prefersReducedMotion) return
-  
+
     cartButton.classList.remove('is-bumping')
     void cartButton.offsetWidth
     cartButton.classList.add('is-bumping')
   }
-  
   // Bind once to the stable list; rendering only replaces its children.
-  const cartActions = { decrease: cart.decreaseItem, increase: cart.addItem, remove: cart.removeItem }
+  const cartActions = {
+    decrease: cart.decreaseItem,
+    increase: cart.addItem,
+    remove: cart.removeItem,
+  }
   cartItems.addEventListener('click', (event) => {
-    const button = (event.target instanceof Element ? event.target : null)?.closest<HTMLElement>('button[data-cart-action]')
+    const button = (
+      event.target instanceof Element ? event.target : null
+    )?.closest<HTMLElement>('button[data-cart-action]')
     if (!button || !cartItems.contains(button)) return
-    const productId = button.closest<HTMLElement>('.cart-item')?.dataset.productId
+    const productId =
+      button.closest<HTMLElement>('.cart-item')?.dataset.productId
     const actionName = button.dataset.cartAction
     if (!productId || !actionName || !(actionName in cartActions)) return
     const action = cartActions[actionName as keyof typeof cartActions]
     if (!action) return
     action(productId)
     renderCart()
-    const nextRow = Array.from(cartItems.querySelectorAll<HTMLElement>('.cart-item')).find((item) => item.dataset.productId === productId)
-    const nextButton = nextRow?.querySelector<HTMLElement>(`[data-cart-action="${actionName}"]`)
+    const nextRow = Array.from(
+      cartItems.querySelectorAll<HTMLElement>('.cart-item'),
+    ).find((item) => item.dataset.productId === productId)
+    const nextButton = nextRow?.querySelector<HTMLElement>(
+      `[data-cart-action="${actionName}"]`,
+    )
     const focusTarget = nextButton ?? $('#cart-close')
     focusTarget.focus()
   })
   renderCart()
-  
+
   const openCart = () => $<HTMLDialogElement>('#cart-dialog').showModal()
   cartButton.addEventListener('click', openCart)
   $('#cart-review-order').addEventListener('click', () => {
@@ -84,8 +115,10 @@ export const initCartUI = (cart: CartState, products: readonly Product[], onRevi
     $<HTMLDialogElement>('#cart-dialog').close()
     onReviewOrder()
   })
-  
-  $('#cart-close').addEventListener('click', () => $<HTMLDialogElement>('#cart-dialog').close())
+
+  $('#cart-close').addEventListener('click', () =>
+    $<HTMLDialogElement>('#cart-dialog').close(),
+  )
   $<HTMLButtonElement>('#cart-clear').addEventListener('click', () => {
     cart.clear()
     renderCart()

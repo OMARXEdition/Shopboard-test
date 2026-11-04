@@ -14,7 +14,10 @@ const cart = createCartState(undefined, products)
 const cartUI = initCartUI(cart, products, () => ordersUI.openReview())
 const ordersUI = initOrdersUI(createOrdersState(), {
   getCartItems: cart.getItems,
-  onPlaced: () => { cart.clear(); cartUI.renderCart() },
+  onPlaced: () => {
+    cart.clear()
+    cartUI.renderCart()
+  },
   onCancel: cartUI.openCart,
 })
 const catalogUI = initCatalogUI(products, addProductToCart)

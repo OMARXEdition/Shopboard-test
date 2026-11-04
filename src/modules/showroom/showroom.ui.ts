@@ -3,7 +3,10 @@ import { formatPrice } from '../../shared/format-price.ts'
 import { categoryLabel } from '../catalog/catalog.logic.ts'
 import type { Product } from '../catalog/catalog.types.ts'
 
-export const initShowroomUI = (products: readonly Product[], addProductToCart: (id: string) => boolean) => {
+export const initShowroomUI = (
+  products: readonly Product[],
+  addProductToCart: (id: string) => boolean,
+) => {
   // Interactive phone showroom shares the same product objects as the catalog.
   const showroomPicker = $('#showroom-picker')
   const showroomProducts = products
@@ -16,17 +19,25 @@ export const initShowroomUI = (products: readonly Product[], addProductToCart: (
     $<HTMLImageElement>('#phone-product-image').alt = product.alt
     $('#phone-category').textContent = categoryLabel(product.category)
     $('#phone-product-name').textContent = product.name
-    $('#phone-product-description').textContent = showroomDetails ? product.features.join(' · ') : product.description
+    $('#phone-product-description').textContent = showroomDetails
+      ? product.features.join(' · ')
+      : product.description
     $('#phone-product-price').textContent = formatPrice(product.price)
-    $('#phone-position').textContent = `${String(showroomIndex + 1).padStart(2, '0')} / ${String(showroomProducts.length).padStart(2, '0')}`
+    $('#phone-position').textContent =
+      `${String(showroomIndex + 1).padStart(2, '0')} / ${String(showroomProducts.length).padStart(2, '0')}`
     $('#phone-add').setAttribute('aria-label', `أضف ${product.name} إلى السلة`)
     $('#phone-overview').setAttribute('aria-pressed', String(!showroomDetails))
     $('#phone-details').setAttribute('aria-pressed', String(showroomDetails))
-    pickerButtons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === showroomIndex)))
-    if (announce) $('#phone-announcement').textContent = `${product.name}، ${formatPrice(product.price)}. النبتة ${showroomIndex + 1} من ${showroomProducts.length}.`
+    pickerButtons.forEach((button, index) =>
+      button.setAttribute('aria-pressed', String(index === showroomIndex)),
+    )
+    if (announce)
+      $('#phone-announcement').textContent =
+        `${product.name}، ${formatPrice(product.price)}. النبتة ${showroomIndex + 1} من ${showroomProducts.length}.`
   }
   const changeShowroom = (step: number) => {
-    showroomIndex = (showroomIndex + step + showroomProducts.length) % showroomProducts.length
+    showroomIndex =
+      (showroomIndex + step + showroomProducts.length) % showroomProducts.length
     renderShowroom()
   }
   if (showroomPicker && showroomProducts.length) {
@@ -53,14 +64,20 @@ export const initShowroomUI = (products: readonly Product[], addProductToCart: (
     $('#phone-next').addEventListener('click', () => changeShowroom(1))
     $('#phone-add').addEventListener('click', () => {
       if (addProductToCart(showroomProducts[showroomIndex].id)) {
-        $('#phone-announcement').textContent = `أُضيفت ${showroomProducts[showroomIndex].name} إلى سلّتك.`
+        $('#phone-announcement').textContent =
+          `أُضيفت ${showroomProducts[showroomIndex].name} إلى سلّتك.`
       }
     })
-    for (const [selector, details] of [['#phone-overview', false], ['#phone-details', true]] as const) {
+    for (const [selector, details] of [
+      ['#phone-overview', false],
+      ['#phone-details', true],
+    ] as const) {
       $(selector).addEventListener('click', () => {
         showroomDetails = details
         renderShowroom({ announce: false })
-        $('#phone-announcement').textContent = $('#phone-product-description').textContent
+        $('#phone-announcement').textContent = $(
+          '#phone-product-description',
+        ).textContent
       })
     }
     const swipeArea = $('#phone-swipe')
@@ -74,10 +91,13 @@ export const initShowroomUI = (products: readonly Product[], addProductToCart: (
       if (!dragStart || dragStart.id !== event.pointerId) return
       const dx = event.clientX - dragStart.x
       const dy = event.clientY - dragStart.y
-      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) changeShowroom(dx > 0 ? 1 : -1)
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy))
+        changeShowroom(dx > 0 ? 1 : -1)
       dragStart = null
     })
-    swipeArea.addEventListener('pointercancel', () => { dragStart = null })
+    swipeArea.addEventListener('pointercancel', () => {
+      dragStart = null
+    })
     swipeArea.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         event.preventDefault()
@@ -88,7 +108,7 @@ export const initShowroomUI = (products: readonly Product[], addProductToCart: (
   }
   return {
     viewProduct: (id: string) => {
-      const index = showroomProducts.findIndex(product => product.id === id)
+      const index = showroomProducts.findIndex((product) => product.id === id)
       if (index < 0) return false
       showroomIndex = index
       showroomDetails = false

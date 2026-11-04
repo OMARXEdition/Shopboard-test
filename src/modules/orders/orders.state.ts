@@ -14,11 +14,14 @@ export const createOrdersState = (storage?: OrdersStorage): OrdersState => {
     const saved: unknown = JSON.parse(store.getItem(ORDERS_KEY) ?? '[]')
     if (!Array.isArray(saved)) throw new Error('Invalid order history')
     const seen = new Set<string>()
-    return saved.filter(isOrder).filter(order => {
-      if (seen.has(order.id)) return false
-      seen.add(order.id)
-      return true
-    }).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+    return saved
+      .filter(isOrder)
+      .filter((order) => {
+        if (seen.has(order.id)) return false
+        seen.add(order.id)
+        return true
+      })
+      .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
   }
 
   return {
@@ -28,7 +31,7 @@ export const createOrdersState = (storage?: OrdersStorage): OrdersState => {
       const store = getStorage()
       // Read current history before each write; never replace it after a read failure.
       const orders = readOrders(store)
-      const existing = orders.find(saved => saved.id === order.id)
+      const existing = orders.find((saved) => saved.id === order.id)
       if (existing) return existing
       store.setItem(ORDERS_KEY, JSON.stringify([order, ...orders]))
       return order

@@ -1,117 +1,773 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="نبتة — مساحة صغيرة للطبيعة في بيتك. نباتات مختارة بعناية وأصص وأدوات تجعل رحلتك مع النباتات أجمل." />
-  <meta name="theme-color" content="#254b36" />
-  <link rel="icon" type="image/png" href="/src/assets/nabta-logo.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Harmattan:wght@400;700&display=swap" rel="stylesheet" />
-  <title>نبتة — قليل من الأخضر، كثير من الحياة</title>
-  <noscript><style>.site-nav { display: block; } .nav-toggle { display: none; }</style></noscript>
-</head>
-<body>
-  <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
-  <div class="announcement">من الطبيعة، إلى ركنك المفضّل <span aria-hidden="true">✦</span> نبتة لكل حكاية</div>
-  <header class="site-header"><div class="header-container">
-    <a href="./" class="brand-logo" aria-label="نبتة — الصفحة الرئيسية"><img src="/src/assets/nabta-logo.png" alt="نبتة — Nabta" width="1536" height="1024" fetchpriority="high" /></a>
-    <nav id="primary-nav" class="site-nav" aria-label="التنقل الرئيسي"><ul class="nav-list">
-      <li><a href="#hero" class="nav-link is-active" aria-current="location">الرئيسية</a></li>
-      <li><a href="#products" class="nav-link">نباتاتنا</a></li>
-      <li><a href="#play" class="nav-link">اكتشف نبتتك</a></li>
-      <li><a href="#register" class="nav-link">مجتمع نبتة</a></li>
-      <li><a href="#orders" class="nav-link">طلباتي</a></li>
-    </ul></nav>
-    <div class="header-actions"><button type="button" class="cart-button" id="cart-button" aria-label="السلة، 0 منتجات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5.5 8h13l-1.1 12.5H6.6L5.5 8Z" stroke-linejoin="round"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" stroke-linecap="round"/></svg><span class="cart-label">سلّتي</span><span class="cart-count" id="cart-count" aria-hidden="true">0</span></button><button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="فتح القائمة"><span></span><span></span></button></div>
-  </div></header>
-  <main id="main-content">
-    <section id="hero" class="hero-section" aria-labelledby="hero-title"><div class="hero-container">
-      <div class="hero-copy"><span class="eyebrow"><span class="little-leaf" aria-hidden="true">❧</span> تنمو معنا، يومًا بعد يوم</span><h1 id="hero-title">قليل من الأخضر،<br /><span>كثير من الحياة.</span></h1><p class="hero-description">لكل ركن نبتة، ولكل نبتة حكاية. اختر رفيقتك الخضراء، ودع الطبيعة تضيف إلى أيامك شيئًا من الهدوء والجمال.</p><div class="hero-cta-group"><a href="#products" class="btn btn-primary">اكتشف نباتاتنا <span aria-hidden="true">←</span></a><a href="#play" class="text-link">لنجد نبتتك الأولى <span aria-hidden="true">↙</span></a></div><div class="hero-note"><span aria-hidden="true">✳</span><p>مساحات أهدأ. تفاصيل أجمل.<br /><strong>حياة تنمو على مهل.</strong></p></div></div>
-      <div class="hero-stage"><span class="hero-vertical" aria-hidden="true">NATURE, AT HOME</span><div class="hero-image-frame"><img class="hero-product" src="/src/assets/plants/hero-plant.jpg" alt="نبتة مونستيرا بأوراق خضراء واسعة في أصيص بجانب نافذة مضيئة" width="1200" height="800" fetchpriority="high" /></div><div class="hero-stamp"><span aria-hidden="true">❧</span>اختيرت بحب<br />لتنمو معك</div><div class="hero-image-caption"><span>جذور صغيرة، أثر جميل</span><span aria-hidden="true">01 / نبتة</span></div></div>
-    </div></section>
-    <section id="plant-corner" class="plant-corner" aria-labelledby="corner-title" data-state="idle">
-      <div class="section-container">
-        <div class="section-header"><div><span class="eyebrow">مساحة تتخيّلها، وخضرة تختارها</span><h2 id="corner-title">صمّم ركنك الأخضر</h2></div><p>اختر نبتتك وأصيصها، وشاهدها في مساحتك.</p></div>
-        <div class="corner-layout">
-          <div class="corner-preview">
-            <div id="corner-viewport" class="corner-viewport" role="img" aria-label="معاينة تصوّرية ثلاثية الأبعاد لركن غرفة بجدارين وأرضية وسجادة وطاولة ونبتتك المختارة" aria-describedby="corner-summary corner-disclaimer">
-              <canvas id="corner-canvas" class="corner-canvas" aria-hidden="true" hidden></canvas>
-              <div id="corner-fallback" class="corner-fallback"><img id="corner-fallback-image" src="/src/assets/plants/monstera.jpg" alt="نبتة مونستيرا في أصيص" width="800" height="1200" loading="lazy" /><span>صورة النبتة المختارة — يمكنك استخدام خيارات التسوّق في أي وقت</span></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="نبتة — مساحة صغيرة للطبيعة في بيتك. نباتات مختارة بعناية وأصص وأدوات تجعل رحلتك مع النباتات أجمل."
+    />
+    <meta name="theme-color" content="#254b36" />
+    <link rel="icon" type="image/png" href="/src/assets/nabta-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Harmattan:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>نبتة — قليل من الأخضر، كثير من الحياة</title>
+    <noscript
+      ><style>
+        .site-nav {
+          display: block;
+        }
+        .nav-toggle {
+          display: none;
+        }
+      </style></noscript
+    >
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+    <div class="announcement">
+      من الطبيعة، إلى ركنك المفضّل <span aria-hidden="true">✦</span> نبتة لكل
+      حكاية
+    </div>
+    <header class="site-header">
+      <div class="header-container">
+        <a href="./" class="brand-logo" aria-label="نبتة — الصفحة الرئيسية"
+          ><img
+            src="/src/assets/nabta-logo.png"
+            alt="نبتة — Nabta"
+            width="1536"
+            height="1024"
+            fetchpriority="high"
+        /></a>
+        <nav id="primary-nav" class="site-nav" aria-label="التنقل الرئيسي">
+          <ul class="nav-list">
+            <li>
+              <a href="#hero" class="nav-link is-active" aria-current="location"
+                >الرئيسية</a
+              >
+            </li>
+            <li><a href="#products" class="nav-link">نباتاتنا</a></li>
+            <li><a href="#play" class="nav-link">اكتشف نبتتك</a></li>
+            <li><a href="#register" class="nav-link">مجتمع نبتة</a></li>
+            <li><a href="#orders" class="nav-link">طلباتي</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button
+            type="button"
+            class="cart-button"
+            id="cart-button"
+            aria-label="السلة، 0 منتجات"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path
+                d="M5.5 8h13l-1.1 12.5H6.6L5.5 8Z"
+                stroke-linejoin="round"
+              />
+              <path d="M9 8V6.5a3 3 0 0 1 6 0V8" stroke-linecap="round" /></svg
+            ><span class="cart-label">سلّتي</span
+            ><span class="cart-count" id="cart-count" aria-hidden="true"
+              >0</span
+            ></button
+          ><button
+            type="button"
+            class="nav-toggle"
+            id="nav-toggle"
+            aria-expanded="false"
+            aria-controls="primary-nav"
+            aria-label="فتح القائمة"
+          >
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main-content">
+      <section id="hero" class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-container">
+          <div class="hero-copy">
+            <span class="eyebrow"
+              ><span class="little-leaf" aria-hidden="true">❧</span> تنمو معنا،
+              يومًا بعد يوم</span
+            >
+            <h1 id="hero-title">
+              قليل من الأخضر،<br /><span>كثير من الحياة.</span>
+            </h1>
+            <p class="hero-description">
+              لكل ركن نبتة، ولكل نبتة حكاية. اختر رفيقتك الخضراء، ودع الطبيعة
+              تضيف إلى أيامك شيئًا من الهدوء والجمال.
+            </p>
+            <div class="hero-cta-group">
+              <a href="#products" class="btn btn-primary"
+                >اكتشف نباتاتنا <span aria-hidden="true">←</span></a
+              ><a href="#play" class="text-link"
+                >لنجد نبتتك الأولى <span aria-hidden="true">↙</span></a
+              >
             </div>
-            <div class="corner-rotation" role="group" aria-label="تدوير زاوية المعاينة">
-              <button id="corner-right" type="button" class="cart-action" aria-label="تدوير المنظر إلى اليمين" disabled>يمين ↻</button>
-              <button id="corner-reset" type="button" class="cart-action" disabled>إعادة المنظر</button>
-              <button id="corner-left" type="button" class="cart-action" aria-label="تدوير المنظر إلى اليسار" disabled>↺ يسار</button>
+            <div class="hero-note">
+              <span aria-hidden="true">✳</span>
+              <p>
+                مساحات أهدأ. تفاصيل أجمل.<br /><strong
+                  >حياة تنمو على مهل.</strong
+                >
+              </p>
             </div>
-            <p id="corner-load-status" class="corner-load-status" role="status">تُحمّل المعاينة عند اقترابك منها. صورة النبتة وخيارات التسوّق متاحة الآن.</p>
-            <button type="button" id="corner-retry" class="cart-action" hidden>إعادة تحميل المعاينة</button>
           </div>
-          <div class="corner-controls">
-            <div class="corner-controls-heading"><span aria-hidden="true">❧</span><h3>ركنك، على ذوقك.</h3></div>
-            <div class="corner-fields">
-              <div><label for="corner-plant">النبتة</label><select id="corner-plant" aria-describedby="corner-preview-note"></select></div>
-              <div><label for="corner-pot">لون الأصيص في المعاينة</label><select id="corner-pot" aria-describedby="corner-preview-note"></select></div>
-              <div><label for="corner-wall">لون الجدار</label><select id="corner-wall"></select></div>
-              <div><label for="corner-size">حجم النبتة في المعاينة</label><select id="corner-size" aria-describedby="corner-preview-note"></select></div>
+          <div class="hero-stage">
+            <span class="hero-vertical" aria-hidden="true"
+              >NATURE, AT HOME</span
+            >
+            <div class="hero-image-frame">
+              <img
+                class="hero-product"
+                src="/src/assets/plants/hero-plant.jpg"
+                alt="نبتة مونستيرا بأوراق خضراء واسعة في أصيص بجانب نافذة مضيئة"
+                width="1200"
+                height="800"
+                fetchpriority="high"
+              />
             </div>
-            <p id="corner-summary" class="corner-summary" role="status" aria-live="polite"></p>
-            <p id="corner-preview-note" class="corner-note">لون الجدار والأصيص والحجم إعدادات تصوّرية فقط؛ تُضاف النبتة المعروضة في الكتالوج دون أصيص أو مقاس إضافي.</p>
-            <div class="corner-shopping"><button id="corner-add" type="button" class="btn btn-primary" disabled>أضف النبتة إلى السلة +</button><button id="corner-view" type="button" class="btn btn-outline" disabled>عرض النبتة ↙</button></div>
-            <p id="corner-action-status" class="corner-action-status" role="status" aria-live="polite"></p>
+            <div class="hero-stamp">
+              <span aria-hidden="true">❧</span>اختيرت بحب<br />لتنمو معك
+            </div>
+            <div class="hero-image-caption">
+              <span>جذور صغيرة، أثر جميل</span
+              ><span aria-hidden="true">01 / نبتة</span>
+            </div>
           </div>
         </div>
-        <p id="corner-disclaimer" class="corner-disclaimer">معاينة تصوّرية؛ قد تختلف الألوان والأحجام الفعلية.</p>
-        <noscript><p class="empty-state">لتشغيل المعاينة واختيار المنتجات، فعّل JavaScript في متصفحك.</p></noscript>
-      </div>
-    </section>
+      </section>
+      <section
+        id="plant-corner"
+        class="plant-corner"
+        aria-labelledby="corner-title"
+        data-state="idle"
+      >
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <span class="eyebrow">مساحة تتخيّلها، وخضرة تختارها</span>
+              <h2 id="corner-title">صمّم ركنك الأخضر</h2>
+            </div>
+            <p>اختر نبتتك وأصيصها، وشاهدها في مساحتك.</p>
+          </div>
+          <div class="corner-layout">
+            <div class="corner-preview">
+              <div
+                id="corner-viewport"
+                class="corner-viewport"
+                role="img"
+                aria-label="معاينة تصوّرية ثلاثية الأبعاد لركن غرفة بجدارين وأرضية وسجادة وطاولة ونبتتك المختارة"
+                aria-describedby="corner-summary corner-disclaimer"
+              >
+                <canvas
+                  id="corner-canvas"
+                  class="corner-canvas"
+                  aria-hidden="true"
+                  hidden
+                ></canvas>
+                <div id="corner-fallback" class="corner-fallback">
+                  <img
+                    id="corner-fallback-image"
+                    src="/src/assets/plants/monstera.jpg"
+                    alt="نبتة مونستيرا في أصيص"
+                    width="800"
+                    height="1200"
+                    loading="lazy"
+                  /><span
+                    >صورة النبتة المختارة — يمكنك استخدام خيارات التسوّق في أي
+                    وقت</span
+                  >
+                </div>
+              </div>
+              <div
+                class="corner-rotation"
+                role="group"
+                aria-label="تدوير زاوية المعاينة"
+              >
+                <button
+                  id="corner-right"
+                  type="button"
+                  class="cart-action"
+                  aria-label="تدوير المنظر إلى اليمين"
+                  disabled
+                >
+                  يمين ↻
+                </button>
+                <button
+                  id="corner-reset"
+                  type="button"
+                  class="cart-action"
+                  disabled
+                >
+                  إعادة المنظر
+                </button>
+                <button
+                  id="corner-left"
+                  type="button"
+                  class="cart-action"
+                  aria-label="تدوير المنظر إلى اليسار"
+                  disabled
+                >
+                  ↺ يسار
+                </button>
+              </div>
+              <p
+                id="corner-load-status"
+                class="corner-load-status"
+                role="status"
+              >
+                تُحمّل المعاينة عند اقترابك منها. صورة النبتة وخيارات التسوّق
+                متاحة الآن.
+              </p>
+              <button
+                type="button"
+                id="corner-retry"
+                class="cart-action"
+                hidden
+              >
+                إعادة تحميل المعاينة
+              </button>
+            </div>
+            <div class="corner-controls">
+              <div class="corner-controls-heading">
+                <span aria-hidden="true">❧</span>
+                <h3>ركنك، على ذوقك.</h3>
+              </div>
+              <div class="corner-fields">
+                <div>
+                  <label for="corner-plant">النبتة</label
+                  ><select
+                    id="corner-plant"
+                    aria-describedby="corner-preview-note"
+                  ></select>
+                </div>
+                <div>
+                  <label for="corner-pot">لون الأصيص في المعاينة</label
+                  ><select
+                    id="corner-pot"
+                    aria-describedby="corner-preview-note"
+                  ></select>
+                </div>
+                <div>
+                  <label for="corner-wall">لون الجدار</label
+                  ><select id="corner-wall"></select>
+                </div>
+                <div>
+                  <label for="corner-size">حجم النبتة في المعاينة</label
+                  ><select
+                    id="corner-size"
+                    aria-describedby="corner-preview-note"
+                  ></select>
+                </div>
+              </div>
+              <p
+                id="corner-summary"
+                class="corner-summary"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <p id="corner-preview-note" class="corner-note">
+                لون الجدار والأصيص والحجم إعدادات تصوّرية فقط؛ تُضاف النبتة
+                المعروضة في الكتالوج دون أصيص أو مقاس إضافي.
+              </p>
+              <div class="corner-shopping">
+                <button
+                  id="corner-add"
+                  type="button"
+                  class="btn btn-primary"
+                  disabled
+                >
+                  أضف النبتة إلى السلة +</button
+                ><button
+                  id="corner-view"
+                  type="button"
+                  class="btn btn-outline"
+                  disabled
+                >
+                  عرض النبتة ↙
+                </button>
+              </div>
+              <p
+                id="corner-action-status"
+                class="corner-action-status"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </div>
+          </div>
+          <p id="corner-disclaimer" class="corner-disclaimer">
+            معاينة تصوّرية؛ قد تختلف الألوان والأحجام الفعلية.
+          </p>
+          <noscript
+            ><p class="empty-state">
+              لتشغيل المعاينة واختيار المنتجات، فعّل JavaScript في متصفحك.
+            </p></noscript
+          >
+        </div>
+      </section>
 
-    <div class="benefits" aria-label="وعد نبتة"><div><span aria-hidden="true">❧</span><p><strong>مختارة بعناية</strong><span>نباتات تضيف الحياة لمساحتك</span></p></div><div><span aria-hidden="true">☼</span><p><strong>لكل ركن نبتة</strong><span>خيارات تناسب الضوء والمساحة</span></p></div><div><span aria-hidden="true">♡</span><p><strong>نرافقك في العناية</strong><span>تفاصيل بسيطة لنمو أجمل</span></p></div></div>
-    <section id="products" class="products-section" aria-labelledby="products-title"><div class="section-container">
-      <div class="section-header" data-reveal><div><span class="eyebrow">رفقاء من الطبيعة</span><h2 id="products-title">أيّ نبتة تشبه ركنك؟</h2></div><p>من أول ورقة إلى حديقة صغيرة.<br />اكتشف ما يناسبك، ودع الباقي ينمو.</p></div>
-      <div class="catalog-controls" role="group" aria-label="البحث في النباتات"><div class="catalog-control search-control"><label for="product-search">ابحث عن نبتتك</label><input id="product-search" type="search" placeholder="مونستيرا، بوتس، أصيص…" /></div><div class="catalog-control"><label for="product-category">التصنيف</label><select id="product-category"><option value="all">جميع النباتات والمستلزمات</option></select></div><div class="catalog-control"><label for="product-sort">الترتيب</label><select id="product-sort"><option value="default">اختيارات نبتة</option><option value="price-asc">السعر: من الأقل للأعلى</option><option value="price-desc">السعر: من الأعلى للأقل</option></select></div></div>
-      <p id="filter-status" class="filter-status" role="status"></p><p id="products-empty" class="empty-state" hidden>لم نجد نبتة بهذا الاسم. جرّب بحثًا آخر أو تصنيفًا مختلفًا.</p><div class="products-grid"></div>
-    </div></section>
-    <section class="botanical-note" aria-label="فلسفة نبتة"><span aria-hidden="true">❧</span><p>الأشياء الجميلة تحتاج وقتًا.<br /><strong>امنحها ركنًا، وستمنحك حياة.</strong></p><span class="eyebrow">من القلب، إلى الجذور</span></section>
-    <section id="play" class="showroom-section" aria-labelledby="play-title"><div class="section-container showroom-layout">
-      <div class="showroom-copy"><span class="eyebrow">تعرّف إليها عن قرب</span><h2 id="play-title">نبتتك القادمة،<br /><span>بين يديك.</span></h2><p>خذ وقتك في الاختيار. تنقّل بين النباتات، تعرّف على احتياجاتها، وأضف رفيقتك الجديدة إلى السلة.</p><div class="showroom-guide"><span>٠١</span><div><strong>اكتشف على مهلك</strong><p>اسحب الصورة أو استخدم الأسهم للتنقّل.</p></div></div><div class="showroom-guide"><span>٠٢</span><div><strong>تعرّف على التفاصيل</strong><p>كل ما تحتاج معرفته قبل أول ورقة جديدة.</p></div></div><div class="showroom-guide"><span>٠٣</span><div><strong>اختر رفيقتك</strong><p>أضف نبتتك إلى السلة مباشرة من المعرض.</p></div></div><div id="showroom-picker" class="showroom-picker" role="group" aria-label="اختر نبتة لعرضها"></div></div>
-      <div class="showroom-device-area"><div class="shop-phone" aria-label="معرض نبتة التفاعلي"><div class="shop-phone-top"><span>9:41</span><span class="shop-phone-island" aria-hidden="true"></span><span aria-label="بطارية ممتلئة">▰</span></div><div class="shop-phone-brand"><span>نبتة <span aria-hidden="true">❧</span></span><span>رفيقتك الخضراء</span></div><div class="shop-phone-image" id="phone-swipe" tabindex="0" role="group" aria-label="صورة النبتة. اسحب أو استخدم مفتاحي السهم الأيمن والأيسر للتنقل."><img id="phone-product-image" alt="" draggable="false" /><span id="phone-category"></span></div><div class="phone-product-content"><div class="phone-product-tabs" role="group" aria-label="معلومات النبتة"><button type="button" id="phone-overview" aria-pressed="true">عن النبتة</button><button type="button" id="phone-details" aria-pressed="false">العناية والتفاصيل</button></div><h3 id="phone-product-name"></h3><p id="phone-product-description"></p><div class="phone-buy-row"><strong id="phone-product-price"></strong><button type="button" id="phone-add">أضف للسلة +</button></div></div><div class="phone-browse"><button type="button" id="phone-prev" aria-label="النبتة السابقة">→</button><span id="phone-position"></span><button type="button" id="phone-next" aria-label="النبتة التالية">←</button></div><div class="shop-phone-home" aria-hidden="true"></div></div><p class="phone-caption">رفيق صغير. فرق كبير.</p><p id="phone-announcement" class="visually-hidden" role="status" aria-live="polite"></p></div>
-    </div></section>
-    <section id="register" class="register-section" aria-labelledby="register-title"><div class="section-container registration-layout">
-      <div class="registration-copy"><span class="eyebrow">لننمو معًا</span><h2 id="register-title">أهلًا بك في<br /><span>مجتمع نبتة.</span></h2><p>مساحة تجمع محبّي الأخضر. أنشئ حسابك وابدأ حكايتك مع النباتات.</p><span class="registration-leaf" aria-hidden="true">❧</span><small>كل بداية جميلة، تبدأ بنبتة.</small></div>
-      <form id="register-form" class="register-form" method="POST" action="/register">
-        <div class="form-group"><label for="fullName">الاسم الكامل <span class="required" aria-hidden="true">*</span></label><input type="text" id="fullName" name="fullName" placeholder="كيف نناديك؟" required minlength="3" maxlength="50" autocomplete="name" aria-describedby="fullName-hint" /><small id="fullName-hint" class="field-hint">من ٣ إلى ٥٠ حرفًا</small></div>
-        <div class="form-group"><label for="email">البريد الإلكتروني <span class="required" aria-hidden="true">*</span></label><input type="email" id="email" name="email" placeholder="name@example.com" required autocomplete="email" dir="ltr" aria-describedby="email-hint" /><small id="email-hint" class="field-hint">بريدك بين أيدٍ أمينة، لن نشاركه مع أحد.</small></div>
-        <div class="form-group"><label for="password">كلمة المرور <span class="required" aria-hidden="true">*</span></label><div class="password-wrap"><input type="password" id="password" name="password" placeholder="٨ أحرف على الأقل" required minlength="8" pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,}" title="٨ أحرف على الأقل، تتضمن حرفًا إنجليزيًا ورقمًا" autocomplete="new-password" aria-describedby="password-strength" /><button type="button" class="password-toggle" id="toggle-password" aria-label="إظهار كلمة المرور" aria-pressed="false">إظهار</button></div><div class="strength" id="password-strength" aria-live="polite"><div class="strength-track" aria-hidden="true"><span id="strength-bar"></span></div><span class="strength-label" id="strength-label">٨ أحرف على الأقل، تتضمن حرفًا إنجليزيًا ورقمًا</span></div></div>
-        <div class="form-group"><label for="accountType">نوع الحساب <span class="required" aria-hidden="true">*</span></label><select id="accountType" name="accountType" required><option value="" disabled selected>اختر نوع حسابك</option><option value="individual">محبّ للنباتات</option><option value="business">أعمال ومساحات عمل</option><option value="merchant">شريك نبتة</option></select></div>
-        <div class="form-group form-checkbox"><input type="checkbox" id="terms" name="terms" required /><label for="terms">أوافق على شروط الاستخدام وسياسة الخصوصية <span class="required" aria-hidden="true">*</span></label></div><div class="form-group form-checkbox"><input type="checkbox" id="newsletter" name="newsletter" /><label for="newsletter">أرسلوا لي أخبار نبتة ونصائح العناية.</label></div><p id="form-status" class="form-status" role="status" hidden></p><button type="submit" class="btn btn-primary btn-block">انضم إلى مجتمع نبتة <span aria-hidden="true">←</span></button>
-      </form>
-    </div></section>
-    <section id="orders" class="orders-section" aria-labelledby="orders-title">
-      <div class="section-container">
-        <div class="section-header">
-          <div><span class="eyebrow">حكايتك مع الأخضر</span><h2 id="orders-title" tabindex="-1">طلباتي</h2></div>
-          <button type="button" id="orders-refresh" class="cart-action">تحديث السجل</button>
+      <div class="benefits" aria-label="وعد نبتة">
+        <div>
+          <span aria-hidden="true">❧</span>
+          <p>
+            <strong>مختارة بعناية</strong
+            ><span>نباتات تضيف الحياة لمساحتك</span>
+          </p>
         </div>
-        <p class="orders-note">طلبات تجريبية محفوظة في هذا المتصفح فقط. لا يتم إرسال طلب شراء أو تحصيل مبلغ، ولن تظهر الطلبات على جهاز آخر.</p>
-        <p id="orders-status" class="form-status" role="status" hidden></p>
-        <div id="orders-empty" class="orders-empty"><span aria-hidden="true">❧</span><h3>حكايتك تبدأ بنبتة</h3><p>لا توجد طلبات محفوظة بعد. اختر رفيقتك الخضراء، ثم راجع سلّتك لتأكيد طلب تجريبي.</p><a class="btn btn-primary" href="#products">اكتشف نباتاتنا ←</a></div>
-        <ul id="orders-list" class="orders-list" aria-label="سجل الطلبات المحفوظة"></ul>
+        <div>
+          <span aria-hidden="true">☼</span>
+          <p>
+            <strong>لكل ركن نبتة</strong
+            ><span>خيارات تناسب الضوء والمساحة</span>
+          </p>
+        </div>
+        <div>
+          <span aria-hidden="true">♡</span>
+          <p>
+            <strong>نرافقك في العناية</strong
+            ><span>تفاصيل بسيطة لنمو أجمل</span>
+          </p>
+        </div>
       </div>
-    </section>
-  </main>
-  <footer class="site-footer"><div class="section-container footer-main"><a href="./" class="footer-logo" aria-label="نبتة — الصفحة الرئيسية"><img src="/src/assets/nabta-logo.png" alt="نبتة — Nabta" width="1536" height="1024" loading="lazy" /></a><div class="footer-message"><h2>نزرع الجمال، نبتةً نبتة.</h2><p>رفقاء من الطبيعة، لتفاصيل يومك الصغيرة.</p></div><nav aria-label="روابط التذييل"><a href="#products">تسوّق النباتات</a><a href="#play">اكتشف نبتتك</a><a href="#register">انضم إلينا</a></nav></div><div class="section-container footer-bottom"><p>© ٢٠٢٦ نبتة. جميع الحقوق محفوظة.</p><p>صُنعت بحبّ الطبيعة <span aria-hidden="true">❧</span></p></div></footer>
-  <dialog id="cart-dialog" class="cart-dialog" aria-labelledby="cart-title"><div class="cart-heading"><div><span class="eyebrow">قريبًا في ركنك</span><h2 id="cart-title">سلّتك الخضراء</h2></div><button type="button" id="cart-close" class="cart-action" autofocus>إغلاق ×</button></div><p id="cart-empty" class="empty-state">سلّتك تنتظر أول نبتة. اختر رفيقتك الخضراء.</p><ul id="cart-items" class="cart-items"></ul><div class="cart-footer"><p id="cart-summary" role="status" aria-live="polite" aria-atomic="true"></p><button type="button" id="cart-review-order" class="btn btn-primary" disabled>مراجعة الطلب ←</button><button type="button" id="cart-clear" class="cart-action">إفراغ السلة</button></div></dialog>
-  <dialog id="order-review-dialog" class="cart-dialog order-review-dialog" aria-labelledby="order-review-title" aria-describedby="order-review-note">
-    <div class="cart-heading"><div><span class="eyebrow">خطوة قبل ركنك الأخضر</span><h2 id="order-review-title">مراجعة الطلب</h2></div><button type="button" id="order-review-cancel" class="cart-action" autofocus>العودة للسلة</button></div>
-    <p id="order-review-note" class="orders-note">راجع المنتجات والكميات والإجمالي. هذا طلب تجريبي يُحفظ في متصفحك فقط، دون دفع أو توصيل.</p>
-    <div id="order-review-items"></div>
-    <p id="order-review-total" class="order-total"></p>
-    <p id="order-review-status" class="form-status" role="alert" hidden></p>
-    <button type="button" id="order-confirm" class="btn btn-primary btn-block">تأكيد الطلب التجريبي</button>
-  </dialog>
-  <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
-  <script type="module" src="/src/main.ts"></script>
-</body>
+      <section
+        id="products"
+        class="products-section"
+        aria-labelledby="products-title"
+      >
+        <div class="section-container">
+          <div class="section-header" data-reveal>
+            <div>
+              <span class="eyebrow">رفقاء من الطبيعة</span>
+              <h2 id="products-title">أيّ نبتة تشبه ركنك؟</h2>
+            </div>
+            <p>
+              من أول ورقة إلى حديقة صغيرة.<br />اكتشف ما يناسبك، ودع الباقي
+              ينمو.
+            </p>
+          </div>
+          <div
+            class="catalog-controls"
+            role="group"
+            aria-label="البحث في النباتات"
+          >
+            <div class="catalog-control search-control">
+              <label for="product-search">ابحث عن نبتتك</label
+              ><input
+                id="product-search"
+                type="search"
+                placeholder="مونستيرا، بوتس، أصيص…"
+              />
+            </div>
+            <div class="catalog-control">
+              <label for="product-category">التصنيف</label
+              ><select id="product-category">
+                <option value="all">جميع النباتات والمستلزمات</option>
+              </select>
+            </div>
+            <div class="catalog-control">
+              <label for="product-sort">الترتيب</label
+              ><select id="product-sort">
+                <option value="default">اختيارات نبتة</option>
+                <option value="price-asc">السعر: من الأقل للأعلى</option>
+                <option value="price-desc">السعر: من الأعلى للأقل</option>
+              </select>
+            </div>
+          </div>
+          <p id="filter-status" class="filter-status" role="status"></p>
+          <p id="products-empty" class="empty-state" hidden>
+            لم نجد نبتة بهذا الاسم. جرّب بحثًا آخر أو تصنيفًا مختلفًا.
+          </p>
+          <div class="products-grid"></div>
+        </div>
+      </section>
+      <section class="botanical-note" aria-label="فلسفة نبتة">
+        <span aria-hidden="true">❧</span>
+        <p>
+          الأشياء الجميلة تحتاج وقتًا.<br /><strong
+            >امنحها ركنًا، وستمنحك حياة.</strong
+          >
+        </p>
+        <span class="eyebrow">من القلب، إلى الجذور</span>
+      </section>
+      <section id="play" class="showroom-section" aria-labelledby="play-title">
+        <div class="section-container showroom-layout">
+          <div class="showroom-copy">
+            <span class="eyebrow">تعرّف إليها عن قرب</span>
+            <h2 id="play-title">نبتتك القادمة،<br /><span>بين يديك.</span></h2>
+            <p>
+              خذ وقتك في الاختيار. تنقّل بين النباتات، تعرّف على احتياجاتها،
+              وأضف رفيقتك الجديدة إلى السلة.
+            </p>
+            <div class="showroom-guide">
+              <span>٠١</span>
+              <div>
+                <strong>اكتشف على مهلك</strong>
+                <p>اسحب الصورة أو استخدم الأسهم للتنقّل.</p>
+              </div>
+            </div>
+            <div class="showroom-guide">
+              <span>٠٢</span>
+              <div>
+                <strong>تعرّف على التفاصيل</strong>
+                <p>كل ما تحتاج معرفته قبل أول ورقة جديدة.</p>
+              </div>
+            </div>
+            <div class="showroom-guide">
+              <span>٠٣</span>
+              <div>
+                <strong>اختر رفيقتك</strong>
+                <p>أضف نبتتك إلى السلة مباشرة من المعرض.</p>
+              </div>
+            </div>
+            <div
+              id="showroom-picker"
+              class="showroom-picker"
+              role="group"
+              aria-label="اختر نبتة لعرضها"
+            ></div>
+          </div>
+          <div class="showroom-device-area">
+            <div class="shop-phone" aria-label="معرض نبتة التفاعلي">
+              <div class="shop-phone-top">
+                <span>9:41</span
+                ><span class="shop-phone-island" aria-hidden="true"></span
+                ><span aria-label="بطارية ممتلئة">▰</span>
+              </div>
+              <div class="shop-phone-brand">
+                <span>نبتة <span aria-hidden="true">❧</span></span
+                ><span>رفيقتك الخضراء</span>
+              </div>
+              <div
+                class="shop-phone-image"
+                id="phone-swipe"
+                tabindex="0"
+                role="group"
+                aria-label="صورة النبتة. اسحب أو استخدم مفتاحي السهم الأيمن والأيسر للتنقل."
+              >
+                <img id="phone-product-image" alt="" draggable="false" /><span
+                  id="phone-category"
+                ></span>
+              </div>
+              <div class="phone-product-content">
+                <div
+                  class="phone-product-tabs"
+                  role="group"
+                  aria-label="معلومات النبتة"
+                >
+                  <button type="button" id="phone-overview" aria-pressed="true">
+                    عن النبتة</button
+                  ><button
+                    type="button"
+                    id="phone-details"
+                    aria-pressed="false"
+                  >
+                    العناية والتفاصيل
+                  </button>
+                </div>
+                <h3 id="phone-product-name"></h3>
+                <p id="phone-product-description"></p>
+                <div class="phone-buy-row">
+                  <strong id="phone-product-price"></strong
+                  ><button type="button" id="phone-add">أضف للسلة +</button>
+                </div>
+              </div>
+              <div class="phone-browse">
+                <button
+                  type="button"
+                  id="phone-prev"
+                  aria-label="النبتة السابقة"
+                >
+                  →</button
+                ><span id="phone-position"></span
+                ><button
+                  type="button"
+                  id="phone-next"
+                  aria-label="النبتة التالية"
+                >
+                  ←
+                </button>
+              </div>
+              <div class="shop-phone-home" aria-hidden="true"></div>
+            </div>
+            <p class="phone-caption">رفيق صغير. فرق كبير.</p>
+            <p
+              id="phone-announcement"
+              class="visually-hidden"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </div>
+        </div>
+      </section>
+      <section
+        id="register"
+        class="register-section"
+        aria-labelledby="register-title"
+      >
+        <div class="section-container registration-layout">
+          <div class="registration-copy">
+            <span class="eyebrow">لننمو معًا</span>
+            <h2 id="register-title">
+              أهلًا بك في<br /><span>مجتمع نبتة.</span>
+            </h2>
+            <p>مساحة تجمع محبّي الأخضر. أنشئ حسابك وابدأ حكايتك مع النباتات.</p>
+            <span class="registration-leaf" aria-hidden="true">❧</span
+            ><small>كل بداية جميلة، تبدأ بنبتة.</small>
+          </div>
+          <form
+            id="register-form"
+            class="register-form"
+            method="POST"
+            action="/register"
+          >
+            <div class="form-group">
+              <label for="fullName"
+                >الاسم الكامل
+                <span class="required" aria-hidden="true">*</span></label
+              ><input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="كيف نناديك؟"
+                required
+                minlength="3"
+                maxlength="50"
+                autocomplete="name"
+                aria-describedby="fullName-hint"
+              /><small id="fullName-hint" class="field-hint"
+                >من ٣ إلى ٥٠ حرفًا</small
+              >
+            </div>
+            <div class="form-group">
+              <label for="email"
+                >البريد الإلكتروني
+                <span class="required" aria-hidden="true">*</span></label
+              ><input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="name@example.com"
+                required
+                autocomplete="email"
+                dir="ltr"
+                aria-describedby="email-hint"
+              /><small id="email-hint" class="field-hint"
+                >بريدك بين أيدٍ أمينة، لن نشاركه مع أحد.</small
+              >
+            </div>
+            <div class="form-group">
+              <label for="password"
+                >كلمة المرور
+                <span class="required" aria-hidden="true">*</span></label
+              >
+              <div class="password-wrap">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="٨ أحرف على الأقل"
+                  required
+                  minlength="8"
+                  pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,}"
+                  title="٨ أحرف على الأقل، تتضمن حرفًا إنجليزيًا ورقمًا"
+                  autocomplete="new-password"
+                  aria-describedby="password-strength"
+                /><button
+                  type="button"
+                  class="password-toggle"
+                  id="toggle-password"
+                  aria-label="إظهار كلمة المرور"
+                  aria-pressed="false"
+                >
+                  إظهار
+                </button>
+              </div>
+              <div class="strength" id="password-strength" aria-live="polite">
+                <div class="strength-track" aria-hidden="true">
+                  <span id="strength-bar"></span>
+                </div>
+                <span class="strength-label" id="strength-label"
+                  >٨ أحرف على الأقل، تتضمن حرفًا إنجليزيًا ورقمًا</span
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="accountType"
+                >نوع الحساب
+                <span class="required" aria-hidden="true">*</span></label
+              ><select id="accountType" name="accountType" required>
+                <option value="" disabled selected>اختر نوع حسابك</option>
+                <option value="individual">محبّ للنباتات</option>
+                <option value="business">أعمال ومساحات عمل</option>
+                <option value="merchant">شريك نبتة</option>
+              </select>
+            </div>
+            <div class="form-group form-checkbox">
+              <input type="checkbox" id="terms" name="terms" required /><label
+                for="terms"
+                >أوافق على شروط الاستخدام وسياسة الخصوصية
+                <span class="required" aria-hidden="true">*</span></label
+              >
+            </div>
+            <div class="form-group form-checkbox">
+              <input type="checkbox" id="newsletter" name="newsletter" /><label
+                for="newsletter"
+                >أرسلوا لي أخبار نبتة ونصائح العناية.</label
+              >
+            </div>
+            <p id="form-status" class="form-status" role="status" hidden></p>
+            <button type="submit" class="btn btn-primary btn-block">
+              انضم إلى مجتمع نبتة <span aria-hidden="true">←</span>
+            </button>
+          </form>
+        </div>
+      </section>
+      <section
+        id="orders"
+        class="orders-section"
+        aria-labelledby="orders-title"
+      >
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <span class="eyebrow">حكايتك مع الأخضر</span>
+              <h2 id="orders-title" tabindex="-1">طلباتي</h2>
+            </div>
+            <button type="button" id="orders-refresh" class="cart-action">
+              تحديث السجل
+            </button>
+          </div>
+          <p class="orders-note">
+            طلبات تجريبية محفوظة في هذا المتصفح فقط. لا يتم إرسال طلب شراء أو
+            تحصيل مبلغ، ولن تظهر الطلبات على جهاز آخر.
+          </p>
+          <p id="orders-status" class="form-status" role="status" hidden></p>
+          <div id="orders-empty" class="orders-empty">
+            <span aria-hidden="true">❧</span>
+            <h3>حكايتك تبدأ بنبتة</h3>
+            <p>
+              لا توجد طلبات محفوظة بعد. اختر رفيقتك الخضراء، ثم راجع سلّتك
+              لتأكيد طلب تجريبي.
+            </p>
+            <a class="btn btn-primary" href="#products">اكتشف نباتاتنا ←</a>
+          </div>
+          <ul
+            id="orders-list"
+            class="orders-list"
+            aria-label="سجل الطلبات المحفوظة"
+          ></ul>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="section-container footer-main">
+        <a href="./" class="footer-logo" aria-label="نبتة — الصفحة الرئيسية"
+          ><img
+            src="/src/assets/nabta-logo.png"
+            alt="نبتة — Nabta"
+            width="1536"
+            height="1024"
+            loading="lazy"
+        /></a>
+        <div class="footer-message">
+          <h2>نزرع الجمال، نبتةً نبتة.</h2>
+          <p>رفقاء من الطبيعة، لتفاصيل يومك الصغيرة.</p>
+        </div>
+        <nav aria-label="روابط التذييل">
+          <a href="#products">تسوّق النباتات</a><a href="#play">اكتشف نبتتك</a
+          ><a href="#register">انضم إلينا</a>
+        </nav>
+      </div>
+      <div class="section-container footer-bottom">
+        <p>© ٢٠٢٦ نبتة. جميع الحقوق محفوظة.</p>
+        <p>صُنعت بحبّ الطبيعة <span aria-hidden="true">❧</span></p>
+      </div>
+    </footer>
+    <dialog id="cart-dialog" class="cart-dialog" aria-labelledby="cart-title">
+      <div class="cart-heading">
+        <div>
+          <span class="eyebrow">قريبًا في ركنك</span>
+          <h2 id="cart-title">سلّتك الخضراء</h2>
+        </div>
+        <button type="button" id="cart-close" class="cart-action" autofocus>
+          إغلاق ×
+        </button>
+      </div>
+      <p id="cart-empty" class="empty-state">
+        سلّتك تنتظر أول نبتة. اختر رفيقتك الخضراء.
+      </p>
+      <ul id="cart-items" class="cart-items"></ul>
+      <div class="cart-footer">
+        <p
+          id="cart-summary"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
+        <button
+          type="button"
+          id="cart-review-order"
+          class="btn btn-primary"
+          disabled
+        >
+          مراجعة الطلب ←</button
+        ><button type="button" id="cart-clear" class="cart-action">
+          إفراغ السلة
+        </button>
+      </div>
+    </dialog>
+    <dialog
+      id="order-review-dialog"
+      class="cart-dialog order-review-dialog"
+      aria-labelledby="order-review-title"
+      aria-describedby="order-review-note"
+    >
+      <div class="cart-heading">
+        <div>
+          <span class="eyebrow">خطوة قبل ركنك الأخضر</span>
+          <h2 id="order-review-title">مراجعة الطلب</h2>
+        </div>
+        <button
+          type="button"
+          id="order-review-cancel"
+          class="cart-action"
+          autofocus
+        >
+          العودة للسلة
+        </button>
+      </div>
+      <p id="order-review-note" class="orders-note">
+        راجع المنتجات والكميات والإجمالي. هذا طلب تجريبي يُحفظ في متصفحك فقط،
+        دون دفع أو توصيل.
+      </p>
+      <div id="order-review-items"></div>
+      <p id="order-review-total" class="order-total"></p>
+      <p id="order-review-status" class="form-status" role="alert" hidden></p>
+      <button
+        type="button"
+        id="order-confirm"
+        class="btn btn-primary btn-block"
+      >
+        تأكيد الطلب التجريبي
+      </button>
+    </dialog>
+    <div
+      id="toast-region"
+      class="toast-region"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
