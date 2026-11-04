@@ -1,65 +1,77 @@
-# نبتة — Nabta
+# Nabta — نبتة
 
-## Approved brand direction
+## Purpose
+Transform Shopboard into Nabta, an Arabic plant shop. Replace electrical-device products and related content with plants and plant-care products. Preserve existing shopping behavior and the feature module architecture.
 
-Arabic plant store with a warm, calm botanical identity. Use Arabic right-to-left layouts, ivory surfaces, forest green text and primary actions, olive secondary accents, and restrained gold details. Keep the existing feature modules and shopping interactions.
+## Visual direction
+Use the supplied botanical moodboard as inspiration: deep forest-green surroundings, layered sage-green surfaces, warm ivory text, rounded cards, organic shapes, spacious compositions, and clear plant photography. Create an original Nabta identity; do not copy the reference's Leafly branding or embed its text as UI.
 
-This file was empty when implementation began; the palette and layout below follow the supplied logo and the user's Arabic plant-store request.
+Suggested palette (starting values, not sampled colors):
+- Forest: #123D2B
+- Deep background: #0B261D
+- Sage: #8DAA73
+- Pale sage: #DCE6D2
+- Ivory: #F6F3E8
+- Ochre accent: #C99B55
+- Terracotta accent: #A66D50
 
-## Approved logo
+Use dark text on light sage and ivory surfaces. Check contrast for text, controls, borders, and focus indicators; do not assume every palette pairing is accessible. Keep decoration behind content. Use subtle organic curves and generous corner radii without crowding product information.
 
-- The user-supplied sprout logo with Arabic «نبتة» and Latin «NABTA» is approved.
-- Original asset: `src/assets/nabta-logo.png` (1536 × 1024 PNG).
-- Display this image in the website header and footer. The header logo links to the homepage using `./`, compatible with the Vite base path.
-- Alt text: `نبتة — Nabta`.
-- Preserve the original artwork, colors, proportions, Arabic lettering, and complete ivory canvas. Do not redraw, crop, stretch, recolor, or apply filters to the logo.
-- Keep `height: auto` and `object-fit: contain`; use responsive widths and an ivory surrounding surface. Other photos may use `object-fit: cover`; the logo may not.
-- The original file is intentionally retained at full quality. Vite fingerprints the asset for production.
+## Language and direction
+- Set the document language to Arabic and direction to RTL: `<html lang="ar" dir="rtl">`.
+- Translate all customer-facing text into natural Arabic: navigation, product names, descriptions, category labels, filters, sorting, forms, validation, cart, empty states, notifications, accessibility labels, and footer.
+- Use CSS logical properties such as margin-inline, padding-inline, and inset-inline-end. Order layouts and directional controls intentionally for RTL.
+- Isolate Latin text and mixed-direction values using bdi or appropriate direction attributes. Preserve semantic keyboard and reading order.
+- Keep internal code identifiers and stable product IDs independent of translated labels.
+- Format prices with Intl.NumberFormat for the configured market. Preserve the existing currency until a different market/currency is specified; do not invent shipping, tax, or business policies.
 
-## Typography and palette
+## Typography
+Use Aref Ruqaa from Google Fonts throughout the Arabic interface, with a serif fallback. Load supported regular and bold weights through the official Google Fonts stylesheet, with font-display: swap.
 
-- Body text and controls: Harmattan, weights 400 and 700, with a sans-serif fallback. Headings: Aref Ruqaa, weights 400 and 700, with a serif fallback. Do not replace website text with the logo lettering.
-- Ivory: `#fdfaf0` (sampled from the supplied logo's corner); forest green: `#254b36`; olive: `#78885c`; muted green: `#65715e`; soft sage: `#eef1e5`; gold: `#c89c51`.
-- Use generous Arabic line heights, clear focus states, visible input labels, and touch targets of at least 44px.
-- Mobile-first layouts expand into two-column hero/showroom/registration sections and a three-column catalog. Avoid fixed-width page content and horizontal overflow.
+```css
+font-family: "Aref Ruqaa", serif;
+```
 
-## Page composition
+Use generous line height and readable control sizes. Avoid letter-spacing on Arabic text, clipped dots/diacritics, synthetic weights, and narrow fixed-height buttons. Test text wrapping on small screens. Keep UI text as selectable text, not images. The final logo may use custom lettering, but interface typography must use the actual Aref Ruqaa font.
 
-1. Short green announcement strip and ivory navigation with approved logo and cart counter.
-2. Arabic editorial hero, arched botanical photograph, plant-shopping CTA, and a quiet care message.
-3. Plant collection with search, category selection, price sorting, and existing add-to-cart behavior.
-4. Forest-green brand statement, then the interactive product phone showroom.
-5. Community registration and password controls, followed by an ivory footer with the approved logo.
-6. Matching Arabic cart dialog, quantity controls, and toast feedback.
-7. A «طلباتي» section after registration with an empty state, newest-first order cards, expandable product details, and an explicit refresh control.
+## Brand and logo
+Arabic brand name: نبتة. Latin name: NABTA.
+Explore a sprout emblem, an Arabic calligraphic wordmark, and a botanical seal. Present concepts for selection before choosing the permanent logo. Use a temporary text wordmark until a concept is chosen. The selected mark must remain legible in a small header and work in one color. Prepare a simplified icon for favicon use after selection.
 
-## 3D Plant Corner
+## Plant catalog
+Replace electronics with a coherent catalog of indoor plants, outdoor plants, succulents/cacti, pots, and plant-care supplies. Example products include مونستيرا، بوتس، زاميوكولكاس، سانسيفيريا، إشفيريا، أصيص فخاري، and تربة زراعية.
 
-- Between the hero and catalog, show «صمّم ركنك الأخضر» and «اختر نبتتك وأصيصها، وشاهدها في مساحتك.».
-- Use an ivory preview panel, forest-green actions, sage details, rounded corners, Harmattan body text and Aref Ruqaa headings. Controls stack on mobile, use a compact two-column grid on tablet, and sit beside the room on desktop.
-- The room is procedural Three.js geometry: two walls, a warm floor, oval rug, wooden side table, matte pot, and stylized foliage. Monstera, snake plant and ZZ plant reference the existing catalog; rubber plant becomes eligible only if it exists there.
-- Pot color, wall color, and visual size change the preview only. Add only the selected catalog product ID to the cart; display «معاينة تصوّرية؛ قد تختلف الألوان والأحجام الفعلية.» and explain that preview settings are not purchased variants.
-- «عرض النبتة» selects the same product in the existing phone showroom. Confirm actions only after the corresponding callback succeeds.
-- Drag horizontally or use the labeled rotation/reset buttons. Clamp rotation to ±22° and never auto-rotate. Preserve vertical touch scrolling with `touch-action: pan-y`.
-- Lazy-load the engine within 240px of the viewport. Render on change/resize, cap pixel ratio at 1.5 and shadow maps at 512. Keep product imagery, labels, selection summary, product viewing, and cart actions usable while loading or after WebGL failure; provide a retry button.
-- Dispose scene meshes/materials/shadows/renderer, observers, event listeners, pending frames and late-loading scenes when destroyed. Main wires feature callbacks and HMR cleanup.
+Each product needs a unique stable ID, Arabic name and description, numeric price, category, relevant image and Arabic alt text, and useful features. Use original prices or badges only when intentionally supplied; do not invent discounts, ratings, customer counts, or certifications.
 
-## Local demo orders
+For plants, add care details only where meaningful: light, watering guidance, and size. Verify species-specific claims, especially pet toxicity; omit unverified safety claims. Do not put plant-only required fields on pots or supplies. Model distinct product kinds with a discriminated union when their fields differ.
 
-- Cart footer includes «مراجعة الطلب», disabled when the cart is empty. It opens a separate Arabic review dialog with line quantities, prices, and total.
-- «تأكيد الطلب التجريبي» saves a snapshot under `nabta:orders`, then clears and refreshes the cart. Cancel/Escape returns to the cart without placing an order.
-- Order history uses the same ivory/green design, Harmattan body text, Aref Ruqaa headings, and responsive cards. Keep full order identifiers readable with wrapping and direction isolation.
-- Show browser-local/demo limitations beside history and confirmation; there is no payment, shipping, or backend submission.
-- Historical names/prices are immutable snapshots; calculate money using integer cents. Duplicate confirmations cannot create duplicate IDs. Save failures keep the cart and review intact for retry.
-- Validate saved records. Report unreadable history without overwriting it; ignore individual invalid records in otherwise readable history.
+Use real plant photos that match each item, with consistent crop and lighting. Keep leaves visible and avoid electronics imagery, unrelated photos, and baked-in text. Use licensed or otherwise permitted assets and preserve required attribution.
 
-## Behavior and content
+## Pages and components
+- Header: Nabta identity, Arabic navigation, search, and cart count in a clear RTL layout.
+- Hero: one prominent plant image, a short Arabic headline such as "مساحة أجمل، بنبتة", and a clear "تسوّق النباتات" action. Keep headline and action as live HTML.
+- Catalog: readable rounded cards with image, name, price, and "أضف إلى السلة". Provide Arabic search, category filters, sorting, and an informative no-results state.
+- Cart: Arabic item details, quantity controls, remove action, subtotal, and empty state. Preserve keyboard navigation and return focus when closing its drawer.
+- Showroom: feature plants with usable next/previous controls and correctly connected add-to-cart actions.
+- Authentication: preserve existing behavior and translate labels, validation, and password scoring feedback. Do not imply server authentication exists if it does not.
+- Footer: use only verified contact details and business information. Omit unavailable details.
 
-- Feature ownership remains in `src/modules/`; shared helpers stay in `src/shared/`.
-- Keep `shopboard:cart`, saved `{ id, quantity }` arrays, stable product IDs, numeric prices, totals, and USD currency. Prices use Arabic locale formatting without converting currency.
-- Catalog content now represents plants and growing supplies. Legacy internal IDs remain for saved-cart compatibility.
-- Preserve search/filter/sort, cart add/increase/decrease/remove/clear/reload, mobile navigation, password strength/visibility, native form validation, and showroom picker/arrows/swipe/details/add-to-cart.
-- Registration remains a frontend demonstration; its feedback must not claim a real account was provisioned.
-- Respect reduced-motion preferences. Keep email input left-to-right inside the Arabic form.
-- Plant and supply photographs are local JPEG assets in `src/assets/plants/`, sourced from Pexels and visually checked against their subjects. The hero uses a monstera by a window; catalog and showroom share the same product images. Source links and licensing information are recorded in `src/assets/plants/SOURCES.md`. The approved logo remains separate and unchanged.
-- RTL showroom behavior: the left arrow advances, the right arrow goes back, and dragging right reveals the next item. Navigation wraps around at either end.
+## Responsive behavior and accessibility
+Use mobile-first layouts with min-width breakpoints. Let the product grid adapt to available width; avoid horizontal overflow. Preserve image aspect ratios and enough space for Arabic text. Make touch targets comfortably sized, maintain visible focus, use semantic HTML and input labels, and respect prefers-reduced-motion. Test the cart, menus, and dialogs with keyboard navigation.
+
+## Implementation boundaries
+Follow AGENTS.md and the existing feature modules. Keep domain data/types, state, pure logic, and UI responsibilities separated. Compose features through main.ts. Add no dependency without approval.
+
+Preserve the shopboard:cart storage key and saved arrays of { id, quantity }; derive prices from the current catalog. Ignore saved IDs that no longer exist after replacing electronics. Do not silently map an old electronics ID to a new plant. Preserve the existing build setup and unrelated work.
+
+## Acceptance checks
+- Customer-facing content is Arabic and the document is RTL.
+- Aref Ruqaa loads correctly and Arabic letters/dots remain readable at mobile sizes.
+- No electronics products, images, or promotional copy remain in the active storefront.
+- Search, filters, sorting, cart quantities/totals, persistence, showroom, and existing forms still work.
+- Empty states, validation, accessibility labels, and dynamic messages are translated.
+- Selected colors have adequate contrast and all controls are keyboard usable.
+- Run the project's typecheck, relevant tests, and build; report actual results and anything not verified.
+
+## Instruction for Codex
+Read this document and AGENTS.md, then inspect the current implementation. Briefly propose the affected files and any material missing decisions. Implement the Arabic Nabta plant-store redesign incrementally, preserving functionality and existing module boundaries. Use a temporary text logo until the user chooses a logo concept. Verify the acceptance checks and summarize changes and remaining limitations.

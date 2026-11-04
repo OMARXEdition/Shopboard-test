@@ -43,6 +43,7 @@ Vite (vanilla), HTML, CSS
 - Never add event listeners inside a render function. Add them once, or use event delegation, so one click adds one item.
 - After every change, explain what you changed, in which file, and why.
 - Besure that you inserted the photos of the products correctlly and it appears to the user.
-- Ask for details before adding new feature.
+- Ask for requists details before adding new feature.
 - Before applying new design follow the Design.md folder and besure that the new desgin will follow the file instructions.
-- summerize the prompt and ask the user if what did you summerized it true or need to edit.
+- summerize the prompt to muliple points and ask me if the summerized points is the thing i ,and ask my permission to apply it.
+- organize the code and make the shared function in a single file so the entire program can call it and use it.
