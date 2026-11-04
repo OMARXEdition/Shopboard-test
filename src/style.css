@@ -1313,9 +1313,17 @@ input::placeholder {
     opacity 0.25s,
     transform 0.25s;
 }
-.toast--success { background: var(--green); }
-.toast--error { background: #783c32; border-color: #783c32; }
-.toast--info { background: var(--ivory); color: var(--green); }
+.toast--success {
+  background: var(--green);
+}
+.toast--error {
+  background: #783c32;
+  border-color: #783c32;
+}
+.toast--info {
+  background: var(--ivory);
+  color: var(--green);
+}
 .toast.is-leaving {
   opacity: 0;
   transform: translateY(8px);

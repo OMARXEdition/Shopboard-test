@@ -1,1 +1,104 @@
-:root{color-scheme:dark;font:16px/1.7 system-ui,sans-serif;background:#101010;color:#eee}*{box-sizing:border-box}body{max-width:900px;margin:auto;padding:36px 22px 80px}h1{font-size:clamp(2rem,6vw,3.3rem);line-height:1.1;letter-spacing:-.04em}h2{margin-top:2.5rem}p{color:#bbb}a{color:#b2d9ff}pre{padding:20px;background:#202020;border:1px solid #444;border-radius:6px;overflow:auto;white-space:pre-wrap}code{font-size:.9rem}label{display:block;margin:18px 0 5px}select,input,button{font:inherit;padding:10px;background:#222;color:#eee;border:1px solid #777;border-radius:4px;max-width:100%}button{cursor:pointer;margin:8px 8px 0 0}button:hover{background:#444}:focus-visible{outline:2px solid #b2d9ff;outline-offset:3px}.controls{display:flex;flex-wrap:wrap;gap:20px}.panel{border-top:1px solid #444;padding-top:12px}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:10px;border-bottom:1px solid #444}@media print{:root{color-scheme:light;background:white;color:black}p{color:#333}pre{background:#eee}button,select,input{display:none}}
+:root {
+  color-scheme: dark;
+  font:
+    16px/1.7 system-ui,
+    sans-serif;
+  background: #101010;
+  color: #eee;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  max-width: 900px;
+  margin: auto;
+  padding: 36px 22px 80px;
+}
+h1 {
+  font-size: clamp(2rem, 6vw, 3.3rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+h2 {
+  margin-top: 2.5rem;
+}
+p {
+  color: #bbb;
+}
+a {
+  color: #b2d9ff;
+}
+pre {
+  padding: 20px;
+  background: #202020;
+  border: 1px solid #444;
+  border-radius: 6px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+code {
+  font-size: 0.9rem;
+}
+label {
+  display: block;
+  margin: 18px 0 5px;
+}
+select,
+input,
+button {
+  font: inherit;
+  padding: 10px;
+  background: #222;
+  color: #eee;
+  border: 1px solid #777;
+  border-radius: 4px;
+  max-width: 100%;
+}
+button {
+  cursor: pointer;
+  margin: 8px 8px 0 0;
+}
+button:hover {
+  background: #444;
+}
+:focus-visible {
+  outline: 2px solid #b2d9ff;
+  outline-offset: 3px;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.panel {
+  border-top: 1px solid #444;
+  padding-top: 12px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+td,
+th {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+@media print {
+  :root {
+    color-scheme: light;
+    background: white;
+    color: black;
+  }
+  p {
+    color: #333;
+  }
+  pre {
+    background: #eee;
+  }
+  button,
+  select,
+  input {
+    display: none;
+  }
+}

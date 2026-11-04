@@ -23,6 +23,10 @@ export default [
     files: ['**/*.ts'],
   })),
   {
+    files: ['assets/**/*.js'],
+    languageOptions: { globals: globals.browser },
+  },
+  {
     files: ['src/**/*.ts'],
     languageOptions: { globals: globals.browser },
   },
